@@ -9,9 +9,7 @@ const IntroBody = () => {
         <h2>Can't Attend?</h2>
         <div className="text-block-flex max-size">
           <div className="block">
-          <div className="circled-icon">
             <i class="fab fa-youtube fa-3x"></i>
-            </div>
             <h3>We do livestreaming</h3>
             <p>
               We livestream our services through YouTube so you and many others
@@ -20,9 +18,7 @@ const IntroBody = () => {
             </p>
           </div>
           <div className="block">
-            <div className="circled-icon">
-              <i class="fas fa-compact-disc fa-3x"></i>
-            </div>
+            <i class="fas fa-compact-disc fa-3x"></i>
             {/* <i class="fas fa-compact-disc fa-3x"></i> */}
             <h3>Missed us?</h3>
             <p>
@@ -32,9 +28,7 @@ const IntroBody = () => {
             </p>
           </div>
           <div className="block">
-          <div className="circled-icon">
             <i class="fas fa-calendar-alt fa-3x"></i>
-            </div>
             <h3>Check our schedule</h3>
             <p>
               Look at our other service times. We have both morning and evening

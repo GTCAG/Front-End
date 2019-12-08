@@ -8,6 +8,7 @@
 .text-block {
   padding: 50px;
   display: block;
+  box-sizing: border-box;
   text-align: center;
   background-color: white;
   font-family: "Lato", sans-serif;
@@ -21,9 +22,11 @@
   .text-block-flex {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    width: 99%;
     margin: 0 auto;
     .block {
-      padding: 35px 0px;
+      margin-top: 15px;
+      padding: 10px 0px;
       width: 100%;
       h3 {
         margin: 0;
@@ -35,6 +38,10 @@
       p {
         // margin: 10px 20px 15px 20px;
         font-size: 15px;
+        @media screen and (max-width: $break-blocks) {
+          padding: 0;
+          margin: 5px 15px;
+        }
       }
 
       @media screen and (max-width: $break-blocks) {
@@ -42,9 +49,9 @@
       }
     }
 
-    @media screen and (max-width: $break-blocks) {
+    @media screen and (max-width: $break-large) {
       grid-template-columns: 1fr;
-      margin: 0 12px;
+      margin: 0 5px;
     }
   }
 
@@ -66,12 +73,11 @@
     }
   }
 
-  @media screen and (max-width: $break-large) {
+  @media screen and (max-width: $break-blocks) {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-
 
 .circled-icon {
   border: 2px solid rgba(39, 39, 39, 0.137);
