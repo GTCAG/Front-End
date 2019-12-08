@@ -12,7 +12,6 @@ import SideContent from "./SideContent/SideContent";
 const FullLanding = () => {
   return (
     <div className="landing">
-      <NavBar />
       <div className="landing-content-wrapper">
         <div className="landing-content max-size">
           <SideContent />

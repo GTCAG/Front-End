@@ -1,9 +1,13 @@
-import React from 'react';
+import React from "react";
+import LoginPage from "../Login/LoginPage";
+import "./About.scss";
 
 const About = () => {
-    return ( <div>
-        <h3>Test</h3>
-    </div> );
-}
- 
+  return (
+    <div className="login-page-container">
+      <LoginPage />
+    </div>
+  );
+};
+
 export default About;
