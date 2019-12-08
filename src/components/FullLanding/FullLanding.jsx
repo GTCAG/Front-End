@@ -2,7 +2,6 @@ import React from "react";
 
 //Components
 import Schedule from "../Schedule/Schedule";
-import NavBar from "../NavBar/NavBar";
 
 import "./FullLanding.scss";
 import DonationDisplay from "../DonationDisplay/DonationDisplay";

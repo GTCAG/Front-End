@@ -41,15 +41,20 @@
 
   .forgot {
     margin-top: 5px;
+    font-size: 15px;
     span {
       font-weight: bold;
       margin-left: 5px;
+      color: rgb(60, 65, 70);
     }
   }
 
   .subtext {
+    font-size: 15px;
     span {
-      color: rgb(44, 150, 127);
+      margin-left: 5px;
+      color: rgb(29, 170, 158);
+      font-weight: bold;
       cursor: pointer;
     }
   }
@@ -69,7 +74,8 @@
     box-sizing: border-box;
     border-style: none;
     // border-bottom: 2px solid black;
-    padding: 0px 15px;
+    padding: 15px 15px;
+    color: rgb(83, 83, 83);
     width: 100%;
     font-size: 18px;
     background-color: inherit;
@@ -90,10 +96,12 @@
   h2 {
     margin: 0;
     margin-bottom: 15px;
+    color: rgb(29, 170, 158);
   }
 
   p {
     margin: 0;
     margin-bottom: 15px;
+    color: rgb(120, 120, 121);
   }
 }
