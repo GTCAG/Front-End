@@ -14,7 +14,7 @@ const SideContent = () => {
       </div>
 
       <div className="side-info shadow">
-        <div className="centered">
+        <div className="centered heavy-shadow ">
           <h2>Welcome to Church!</h2>
           <p>We're located at 5821 Auburn Blvd, Sacramento, CA 95841</p>
         </div>
