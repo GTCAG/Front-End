@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import "./LoginPage.scss";
 
@@ -47,13 +48,18 @@ const LoginPage = () => {
               />
             </div>
             <div className="forgot">
-              <p>
-                Forgot Password <span>></span>
-              </p>
+              <Link>
+                <p>
+                  Forgot Password <span>></span>
+                </p>
+              </Link>
             </div>
             <button>Login</button>
             <p className="subtext">
-              Don't have an account? <span>Sign up here</span>
+              Don't have an account?{" "}
+              <Link>
+                <span>Sign up here</span>{" "}
+              </Link>
             </p>
           </form>
         </div>

@@ -1,0 +1,16 @@
+.half-input-container {
+  display: flex;
+  justify-content: space-between;
+  input {
+    width: 48%;
+    background-color: rgb(238, 238, 238);
+    margin: 10px 0px;
+    padding: 0px 15px;
+    height: 50px;
+    border-radius: 4px;
+  }
+}
+
+.register-btn {
+  margin-top: 10px;
+}
