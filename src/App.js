@@ -10,12 +10,15 @@ import Dashboard from "./components/Dashboard/Dashboard";
 function App() {
   return (
     <Router>
-      <NavBar />
       <Route exact path="/">
+        <NavBar />
+
         <FullLanding />
         <IntroBody />
       </Route>
       <Route path="/about">
+        <NavBar />
+
         <About />
       </Route>
       <Route path="/dashboard">
