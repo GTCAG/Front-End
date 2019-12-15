@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -54,26 +54,54 @@ const MenuButton = styled.div`
     opacity: 1;
     color: #f2be8d;
   }
+  &:hover {
+    opacity: 0.7;
+    // color: #f2be8d;
+  }
 `;
 
 const DashboardMenu = () => {
+  const [activeLink, setActiveLink] = useState("dashboard");
   const location = useLocation();
 
-  console.log(location);
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/dashboard":
+        break;
+      case "/dashboard/settings":
+        setActiveLink("settings");
+        break;
+    }
+  }, [location]);
+
+  const onNavClick = e => {
+    const clicked = e.currentTarget.getAttribute("name");
+    if (activeLink !== clicked) {
+      setActiveLink(clicked);
+    }
+  };
 
   return (
     <Menu>
       <FillBox>CREATE GROUP</FillBox>
       <MenuButtonList>
         <Link to="/dashboard">
-          <MenuButton className="active">
-            <i class="fas fa-th"></i>
+          <MenuButton
+            onClick={onNavClick}
+            className={activeLink === "dashboard" ? "active" : ""}
+            name="dashboard"
+          >
+            <i className="fas fa-th"></i>
             <p>Dashboard</p>
           </MenuButton>
         </Link>
         <Link to="/dashboard/settings">
-          <MenuButton>
-            <i class="fas fa-cog"></i>
+          <MenuButton
+            onClick={onNavClick}
+            className={activeLink === "settings" ? "active" : ""}
+            name="settings"
+          >
+            <i className="fas fa-cog"></i>
             <p>Settings</p>
           </MenuButton>
         </Link>

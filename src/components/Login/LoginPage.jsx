@@ -57,7 +57,7 @@ const LoginPage = () => {
             <button>Login</button>
             <p className="subtext">
               Don't have an account?{" "}
-              <Link>
+              <Link to="/register">
                 <span>Sign up here</span>{" "}
               </Link>
             </p>

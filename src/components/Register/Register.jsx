@@ -115,7 +115,7 @@ const Register = () => {
             <button className="register-btn">Register</button>
             <p className="subtext">
               Already have an account?{" "}
-              <Link>
+              <Link to="/login">
                 <span>Login here</span>
               </Link>
             </p>
