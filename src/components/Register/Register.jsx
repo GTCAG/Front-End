@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { register } from "../../store/actions/userActions";
+import { useDispatch } from "react-redux";
 
 import "./Register.scss";
 const initialFormData = {
@@ -12,6 +14,7 @@ const initialFormData = {
 const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState({});
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,7 +54,13 @@ const Register = () => {
 
     if (checkErrors()) {
       console.log("We made it");
-
+      dispatch(
+        register({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName
+        })
+      );
       //Make HTTP Call here.
     }
   };

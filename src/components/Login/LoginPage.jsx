@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { login } from "../../store/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./LoginPage.scss";
 
 const initialFormData = {
@@ -9,6 +12,9 @@ const initialFormData = {
 };
 const LoginPage = () => {
   const [formData, setFormData] = useState(initialFormData);
+  const dispatch = useDispatch();
+  const loginError = useSelector(state => state.loginError);
+  console.log("Login error:", loginError);
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,6 +23,7 @@ const LoginPage = () => {
   const handleSubmit = e => {
     e.preventDefault();
     console.log("Data: ", formData);
+    dispatch(login(formData));
   };
 
   return (
@@ -55,6 +62,7 @@ const LoginPage = () => {
               </Link>
             </div>
             <button>Login</button>
+            {loginError && <p className="form-error">{loginError}</p>}
             <p className="subtext">
               Don't have an account?{" "}
               <Link to="/register">

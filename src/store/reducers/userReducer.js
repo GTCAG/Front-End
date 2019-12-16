@@ -22,6 +22,7 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_START:
       return { ...state, isLoggingIn: true, loginError: "" };
     case LOGIN_SUCCESS:
+      localStorage.setItem("authToken", action.payload);
       return { ...state, isLoggingIn: false, loggedIn: true };
     case LOGIN_FAILURE:
       return { ...state, isLoggingIn: false, loginError: action.payload };
@@ -37,5 +38,7 @@ export const userReducer = (state = initialState, action) => {
       };
     case REGISTER_SUCCESS:
       return { ...state, isRegistering: false, loggedIn: true };
+    default:
+      return { ...state };
   }
 };
