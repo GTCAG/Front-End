@@ -71,6 +71,9 @@ const DashboardMenu = () => {
       case "/dashboard/settings":
         setActiveLink("settings");
         break;
+      case "/songs":
+        setActiveLink("songs");
+        break;
     }
   }, [location]);
 
@@ -95,6 +98,18 @@ const DashboardMenu = () => {
             <p>Dashboard</p>
           </MenuButton>
         </Link>
+
+        <Link to="/dashboard/songs">
+          <MenuButton
+            onClick={onNavClick}
+            className={activeLink === "songs" ? "active" : ""}
+            name="songs"
+          >
+            <i class="fas fa-music"></i>
+            <p>Song Library</p>
+          </MenuButton>
+        </Link>
+
         <Link to="/dashboard/settings">
           <MenuButton
             onClick={onNavClick}
