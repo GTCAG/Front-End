@@ -22,11 +22,9 @@ export const login = credentials => dispatch => {
   axiosAuth()
     .post("/users/login", credentials)
     .then(res => {
-      console.log("Login response: ", res);
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.accessToken });
     })
     .catch(err => {
-      console.log("Error logging in: ", err.response);
       dispatch({ type: LOGIN_FAILURE, payload: err.response.data.error });
     });
 };
@@ -36,7 +34,6 @@ export const register = user => dispatch => {
   axiosAuth()
     .post("/users/register", user)
     .then(res => {
-      console.log("Register response: ", res);
       dispatch({ type: REGISTER_SUCCESS });
     })
     .catch(err => {
