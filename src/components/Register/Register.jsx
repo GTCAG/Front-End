@@ -17,11 +17,11 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const checkErrors = e => {
+  const checkErrors = () => {
     const { password, confirmPassword, email, firstName, lastName } = formData;
     const newErrors = {};
     if (password !== confirmPassword) {
-      newErrors.passMatch = false;
+      newErrors.passMatch = true;
     }
 
     if (password.length < 6) {
@@ -48,15 +48,13 @@ const Register = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("Data: ", formData);
 
-    if (checkErrors(e)) {
+    if (checkErrors()) {
       console.log("We made it");
-    } else {
-      console.log("Nope");
+
+      //Make HTTP Call here.
     }
   };
-
   return (
     <div className="parentp">
       <div className="parent">
@@ -65,6 +63,9 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="login-form ">
             <h2>Register</h2>
             <p>Enter your details below to continue</p>
+            {formErrors.email && (
+              <p className="form-error">{formErrors.email}</p>
+            )}
             <div className="icon-input">
               <i className="far fa-envelope"></i>
               <input
@@ -75,6 +76,9 @@ const Register = () => {
                 onChange={handleChange}
               />
             </div>
+            {formErrors.password && (
+              <p className="form-error">{formErrors.password}</p>
+            )}
             <div className="icon-input">
               <i className="fas fa-lock"></i>
               <input
@@ -85,6 +89,9 @@ const Register = () => {
                 onChange={handleChange}
               />
             </div>
+            {formErrors.passMatch === true && (
+              <p className="form-error">Passwords do not match</p>
+            )}
             <div className="icon-input">
               <i className="fas fa-lock"></i>
               <input
@@ -95,6 +102,9 @@ const Register = () => {
                 onChange={handleChange}
               />
             </div>
+            {formErrors.firstName && (
+              <p className="form-error">{formErrors.firstName}</p>
+            )}
             <div className="half-input-container">
               <input
                 type="text"
