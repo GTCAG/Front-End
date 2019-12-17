@@ -11,8 +11,7 @@ const NavBar = () => {
         <div className="links">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
-          {/* <Link to="/media">Media</Link> */}
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/login">Sign In</Link>
         </div>
       </div>
     </nav>

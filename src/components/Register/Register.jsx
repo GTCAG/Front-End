@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { register } from "../../store/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import "./Register.scss";
 const initialFormData = {
@@ -15,7 +16,7 @@ const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState({});
   const dispatch = useDispatch();
-
+  const isRegistering = useSelector(state => state.isRegistering);
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -69,76 +70,95 @@ const Register = () => {
       <div className="parent">
         <div className="image-container"></div>
         <div className="login-half shadow">
-          <form onSubmit={handleSubmit} className="login-form ">
-            <h2>Register</h2>
-            <p>Enter your details below to continue</p>
-            {formErrors.email && (
-              <p className="form-error">{formErrors.email}</p>
-            )}
-            <div className="icon-input">
-              <i className="far fa-envelope"></i>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-              />
+          {isRegistering ? (
+            <div className="progress-container">
+              <CircularProgress />
             </div>
-            {formErrors.password && (
-              <p className="form-error">{formErrors.password}</p>
-            )}
-            <div className="icon-input">
-              <i className="fas fa-lock"></i>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            {formErrors.passMatch === true && (
-              <p className="form-error">Passwords do not match</p>
-            )}
-            <div className="icon-input">
-              <i className="fas fa-lock"></i>
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
-            {formErrors.firstName && (
-              <p className="form-error">{formErrors.firstName}</p>
-            )}
-            <div className="half-input-container">
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="login-form ">
+              <h2>Register</h2>
+              <p>Enter your details below to continue</p>
+              {formErrors.email && (
+                <p className="form-error">{formErrors.email}</p>
+              )}
+              <div
+                className={`icon-input` + (isRegistering ? " disabled" : "")}
+              >
+                <i className="far fa-envelope"></i>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  disabled={isRegistering}
+                />
+              </div>
+              {formErrors.password && (
+                <p className="form-error">{formErrors.password}</p>
+              )}
+              <div
+                className={`icon-input` + (isRegistering ? " disabled" : "")}
+              >
+                <i className="fas fa-lock"></i>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  disabled={isRegistering}
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
+              {formErrors.passMatch === true && (
+                <p className="form-error">Passwords do not match</p>
+              )}
+              <div
+                className={`icon-input` + (isRegistering ? " disabled" : "")}
+              >
+                <i className="fas fa-lock"></i>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  disabled={isRegistering}
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+              </div>
+              {formErrors.firstName && (
+                <p className="form-error">{formErrors.firstName}</p>
+              )}
+              <div className="half-input-container">
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  value={formData.firstName}
+                  disabled={isRegistering}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  disabled={isRegistering}
+                  value={formData.lastName}
+                  onChange={handleChange}
+                />
+              </div>
 
-            <button className="register-btn">Register</button>
-            <p className="subtext">
-              Already have an account?{" "}
-              <Link to="/login">
-                <span>Login here</span>
-              </Link>
-            </p>
-          </form>
+              <button className="register-btn" disabled={isRegistering}>
+                Register
+              </button>
+              <p className="subtext">
+                Already have an account?{" "}
+                <Link to="/login">
+                  <span>Login here</span>
+                </Link>
+              </p>
+            </form>
+          )}
         </div>
       </div>
     </div>
