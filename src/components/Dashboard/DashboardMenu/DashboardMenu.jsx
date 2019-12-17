@@ -71,7 +71,7 @@ const DashboardMenu = () => {
       case "/dashboard/settings":
         setActiveLink("settings");
         break;
-      case "/songs":
+      case "/dashboard/songs":
         setActiveLink("songs");
         break;
     }
