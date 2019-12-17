@@ -20,7 +20,7 @@ const Card = styled.div`
   height: 450px;
   color: #f2be8d;
 
-  animation: ${fadeInAndUp} 0.4s ease-out 0s;
+  animation: ${fadeInAndUp} 0.37s ease-out 0s;
 
   .what {
     padding: 10px 25px;

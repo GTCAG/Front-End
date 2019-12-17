@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import LibraryMusicRoundedIcon from "@material-ui/icons/LibraryMusicRounded";
+import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
+import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
+import GroupRoundedIcon from "@material-ui/icons/GroupRounded";
 
 const Menu = styled.div`
   width: 160px
@@ -43,9 +47,7 @@ const MenuButton = styled.div`
     font-size: 13.5px;
     font-weight: 500;
     font-family: "Open Sans", sans-serif;
-  }
-  i {
-    margin-right: 25px;
+    margin-left: 20px;
   }
 
   opacity: 0.4;
@@ -74,6 +76,9 @@ const DashboardMenu = () => {
       case "/dashboard/songs":
         setActiveLink("songs");
         break;
+      case "/dashboard/groups":
+        setActiveLink("groups");
+        break;
     }
   }, [location]);
 
@@ -94,8 +99,19 @@ const DashboardMenu = () => {
             className={activeLink === "dashboard" ? "active" : ""}
             name="dashboard"
           >
-            <i className="fas fa-th"></i>
+            <DashboardRoundedIcon />
             <p>Dashboard</p>
+          </MenuButton>
+        </Link>
+
+        <Link to="/dashboard/groups">
+          <MenuButton
+            onClick={onNavClick}
+            className={activeLink === "groups" ? "active" : ""}
+            name="groups"
+          >
+            <GroupRoundedIcon />
+            <p>Groups</p>
           </MenuButton>
         </Link>
 
@@ -105,7 +121,8 @@ const DashboardMenu = () => {
             className={activeLink === "songs" ? "active" : ""}
             name="songs"
           >
-            <i class="fas fa-music"></i>
+            {/* <i class="fas fa-music"></i> */}
+            <LibraryMusicRoundedIcon />
             <p>Song Library</p>
           </MenuButton>
         </Link>
@@ -116,7 +133,7 @@ const DashboardMenu = () => {
             className={activeLink === "settings" ? "active" : ""}
             name="settings"
           >
-            <i className="fas fa-cog"></i>
+            <SettingsRoundedIcon />
             <p>Settings</p>
           </MenuButton>
         </Link>

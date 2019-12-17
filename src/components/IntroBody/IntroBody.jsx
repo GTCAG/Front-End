@@ -1,15 +1,25 @@
 import React from "react";
-
+import YouTubeIcon from "@material-ui/icons/YouTube";
+import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded";
+import VideoLibraryRoundedIcon from "@material-ui/icons/VideoLibraryRounded";
 import "./IntroBody.scss";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  icon: {
+    fontSize: "70px"
+  }
+}));
 
 const IntroBody = () => {
+  const classes = useStyles();
   return (
     <div className="body-container">
       <div className="text-block light">
         <h2>Can't Attend?</h2>
         <div className="text-block-flex max-size">
           <div className="block">
-            <i class="fab fa-youtube fa-3x"></i>
+            <YouTubeIcon className={classes.icon} />
             <h3>We do livestreaming</h3>
             <p>
               We livestream our services through YouTube so you and many others
@@ -18,8 +28,7 @@ const IntroBody = () => {
             </p>
           </div>
           <div className="block">
-            <i class="fas fa-compact-disc fa-3x"></i>
-            {/* <i class="fas fa-compact-disc fa-3x"></i> */}
+            <VideoLibraryRoundedIcon className={classes.icon} />
             <h3>Missed us?</h3>
             <p>
               If by any chance you missed the timing of our services, we archive
@@ -28,7 +37,7 @@ const IntroBody = () => {
             </p>
           </div>
           <div className="block">
-            <i class="fas fa-calendar-alt fa-3x"></i>
+            <EventNoteRoundedIcon className={classes.icon} />
             <h3>Check our schedule</h3>
             <p>
               Look at our other service times. We have both morning and evening
