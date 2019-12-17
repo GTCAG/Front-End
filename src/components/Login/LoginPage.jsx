@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { login } from "../../store/actions/userActions";
@@ -14,6 +14,7 @@ const initialFormData = {
 const LoginPage = () => {
   const [formData, setFormData] = useState(initialFormData);
   const dispatch = useDispatch();
+  const loggedIn = useSelector(state => state.loggedIn);
   const loginError = useSelector(state => state.loginError);
   const loggingIn = useSelector(state => state.isLoggingIn);
   const handleChange = e => {
@@ -24,6 +25,10 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch(login(formData));
   };
+
+  if (loggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <div className="parentp">
