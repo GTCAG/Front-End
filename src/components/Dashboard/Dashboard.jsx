@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import styled from "styled-components";
 import DashboardHome from "./DashboardHome";
 import SongsView from "./SongsView";
+import GroupView from "./GroupView/GroupView";
 
 //Color Palette: D88A83 - BA6C65 - F2BE8D - 394359  - 303242
 
@@ -25,6 +26,9 @@ const Dashboard = () => {
       </Route>
       <Route path="/dashboard/settings">
         <h1>Settings</h1>
+      </Route>
+      <Route path="/dashboard/groups">
+        <GroupView />
       </Route>
     </DashboardContainer>
   );

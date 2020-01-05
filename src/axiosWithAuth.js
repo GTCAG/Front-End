@@ -10,7 +10,7 @@ export function axiosAuth() {
     baseURL: "https://gtcag.herokuapp.com",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `${token}`
     }
   });
 }
