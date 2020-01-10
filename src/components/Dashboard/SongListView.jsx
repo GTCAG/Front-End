@@ -75,8 +75,8 @@ const SongListView = () => {
 
       <div className={classes.demo}>
         <List dense={dense}>
-          {songList.map(song => (
-            <ListItem button onClick={() => console.log("Test")}>
+          {songList.map((song, index) => (
+            <ListItem key={index} button onClick={() => console.log("Test")}>
               <ListItemAvatar>
                 <ListItemIcon>
                   <MusicNoteIcon />

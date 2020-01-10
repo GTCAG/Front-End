@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { register } from "../../store/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 import "./Register.scss";
 const initialFormData = {
@@ -13,6 +16,7 @@ const initialFormData = {
   lastName: ""
 };
 const Register = () => {
+  const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState({});
   const dispatch = useDispatch();
@@ -21,8 +25,16 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const checkErrors = () => {
-    const { password, confirmPassword, email, firstName, lastName } = formData;
+    const { password, confirmPassword, email, firstName } = formData;
     const newErrors = {};
     if (password !== confirmPassword) {
       newErrors.passMatch = true;
@@ -50,23 +62,52 @@ const Register = () => {
     }
   };
 
+  const handleSuccess = () => {
+    setOpen(true);
+    setFormData(initialFormData);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
 
     if (checkErrors()) {
       console.log("We made it");
       dispatch(
-        register({
-          email: formData.email,
-          password: formData.password,
-          firstName: formData.firstName
-        })
+        register(
+          {
+            email: formData.email,
+            password: formData.password,
+            firstName: formData.firstName
+          },
+          handleSuccess
+        )
       );
-      //Make HTTP Call here.
     }
   };
   return (
     <div className="parentp">
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Succesfully Registered"
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleClose}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
       <div className="parent">
         <div className="image-container"></div>
         <div className="login-half shadow">

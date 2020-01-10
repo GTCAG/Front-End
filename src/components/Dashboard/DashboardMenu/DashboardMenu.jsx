@@ -79,6 +79,9 @@ const DashboardMenu = () => {
       case "/dashboard/groups":
         setActiveLink("groups");
         break;
+      default:
+        setActiveLink("dashboard");
+        break;
     }
   }, [location]);
 

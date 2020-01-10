@@ -29,16 +29,17 @@ export const login = credentials => dispatch => {
     });
 };
 
-export const register = user => dispatch => {
+export const register = (user, handleSuccess) => dispatch => {
   dispatch({ type: REGISTER_START });
   axiosAuth()
     .post("/users/register", user)
     .then(res => {
       dispatch({ type: REGISTER_SUCCESS });
+      handleSuccess();
     })
     .catch(err => {
       console.log("Error registering: ");
       console.log(err.response);
-      dispatch({ type: REGISTER_FAILURE, payload: err.message });
+      dispatch({ type: REGISTER_FAILURE, payload: err.response.data.error });
     });
 };

@@ -37,7 +37,7 @@ export const userReducer = (state = initialState, action) => {
         isRegistering: false
       };
     case REGISTER_SUCCESS:
-      return { ...state, isRegistering: false, loggedIn: true };
+      return { ...state, isRegistering: false, registrationError: "" };
     default:
       return { ...state };
   }
