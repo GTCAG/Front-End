@@ -27,9 +27,10 @@ const Dashboard = () => {
       <Route path="/dashboard/settings">
         <h1>Settings</h1>
       </Route>
-      <Route path="/dashboard/groups">
+      <Route exact path="/dashboard/groups">
         <GroupView />
       </Route>
+      <Route exact path="/dashboard/groups/create"></Route>
     </DashboardContainer>
   );
 };
