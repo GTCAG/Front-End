@@ -4,7 +4,8 @@ import {
   LOGIN_FAILURE,
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
-  REGISTER_START
+  REGISTER_START,
+  PERSIST_LOGIN
 } from "../actions/userActions";
 
 const initialState = {
@@ -12,12 +13,21 @@ const initialState = {
   isLoggingIn: false,
   loginError: "",
 
+  firstName: null,
+  lastName: null,
+  userId: null,
+  email: null,
+
   isRegistering: false,
   registrationError: ""
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case PERSIST_LOGIN:
+      const { firstName, lastName, userId, email } = action.payload;
+      return { ...state, loggedIn: true, firstName, lastName, userId, email };
+
     //Authorization/Logging in
     case LOGIN_START:
       return { ...state, isLoggingIn: true, loginError: "" };

@@ -69,6 +69,12 @@ const GroupView = () => {
   const handleGroupAddClick = () => {
     setGroupDialog(true);
   };
+
+  const handleGroupJoin = () => {};
+
+  const handleGroupCreate = () => {
+    setOpen(false);
+  };
   const classes = useStyles();
   return (
     <div>
@@ -126,7 +132,7 @@ const GroupView = () => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleGroupCreate} color="primary">
             Create
           </Button>
         </DialogActions>
@@ -155,7 +161,7 @@ const GroupView = () => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleGroupJoin} color="primary">
             Join
           </Button>
         </DialogActions>

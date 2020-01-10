@@ -7,6 +7,8 @@ export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
 
+export const PERSIST_LOGIN = "PERSIST_LOGIN";
+
 /**
  * 
 lastName: ""
@@ -26,6 +28,22 @@ export const login = credentials => dispatch => {
     })
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err.response.data.error });
+    });
+};
+
+export const persistLogin = () => dispatch => {
+  axiosAuth()
+    .get("/users/whoami")
+    .then(res => {
+      console.log("res, ", res);
+      const { userId, email, firstName, lastName } = res.data;
+      dispatch({
+        type: PERSIST_LOGIN,
+        payload: { userId, email, firstName, lastName }
+      });
+    })
+    .catch(err => {
+      console.log("Error doing persist,", err.response);
     });
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.scss";
 import IntroBody from "./components/IntroBody/IntroBody";
 import FullLanding from "./components/FullLanding/FullLanding";
@@ -8,8 +8,19 @@ import NavBar from "./components/NavBar/NavBar";
 import Dashboard from "./components/Dashboard/Dashboard";
 import LoginPage from "./components/Login/LoginPage";
 import Register from "./components/Register/Register";
+import { useSelector, useDispatch } from "react-redux";
+import { persistLogin } from "./store/actions/userActions";
 
 function App() {
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(persistLogin());
+  }, []);
+
+  console.log("Current state: ", state);
+
   return (
     <Router>
       <Route exact path="/">
