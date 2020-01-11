@@ -5,6 +5,7 @@ import styled from "styled-components";
 import DashboardHome from "./DashboardHome";
 import SongsView from "./SongsView";
 import GroupView from "./GroupView/GroupView";
+import GroupDashboard from "./GroupView/GroupDashboard/GroupDashboard";
 
 //Color Palette: D88A83 - BA6C65 - F2BE8D - 394359  - 303242
 
@@ -30,7 +31,9 @@ const Dashboard = () => {
       <Route exact path="/dashboard/groups">
         <GroupView />
       </Route>
-      <Route exact path="/dashboard/groups/create"></Route>
+      <Route exact path="/dashboard/groups/:groupId">
+        <GroupDashboard />
+      </Route>
     </DashboardContainer>
   );
 };

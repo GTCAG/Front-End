@@ -25,8 +25,9 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     gridTemplateColumns: "repeat( auto-fit, minmax(250px, 1fr) )",
     // gridTemplateRows: "auto",
-    gap: "25px",
-    overflowY: "auto"
+    paddingBottom: 10,
+    gap: "25px"
+    // overflowY: "auto"
   },
   backdrop: {
     zIndex: 90,
@@ -38,7 +39,8 @@ const useStyles = makeStyles(() => ({
     right: 25,
     bottom: 25,
     left: "auto",
-    position: "fixed"
+    position: "fixed",
+    zIndex: 89
   },
   fab: {
     marginLeft: 20
@@ -51,7 +53,9 @@ const useStyles = makeStyles(() => ({
   },
   viewContainer: {
     width: "100%",
-    margin: 25
+    margin: "25px 0px 25px 25px",
+    paddingRight: 25,
+    overflowY: "auto"
   }
 }));
 
