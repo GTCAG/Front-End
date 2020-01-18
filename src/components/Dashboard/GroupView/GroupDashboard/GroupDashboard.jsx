@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { axiosAuth } from "../../../../axiosWithAuth";
-import AppBar from "@material-ui/core/AppBar";
+import GroupAppBar from "./GroupAppBar";
 
 const initialGroupState = {
   admins: [],
@@ -11,16 +13,24 @@ const initialGroupState = {
   members: []
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  }
+}));
+
 const GroupDashboard = () => {
   //Hooks
   const params = useParams();
-  const [group, setGroup] = useState();
+  const [group, setGroup] = useState(initialGroupState);
   const groupId = params.groupId;
+
+  const classes = useStyles();
 
   //Fetch group from id
   useEffect(() => {
     axiosAuth()
-      .get(`/${groupId}`)
+      .get(`/groups/${groupId}`)
       .then(res => {
         console.log("GroupDashboard response: ", res);
         setGroup(res.data);
@@ -30,7 +40,12 @@ const GroupDashboard = () => {
       });
   }, []);
 
-  return <div></div>;
+  console.log("group: ", group);
+  return (
+    <div className={classes.root}>
+      <GroupAppBar title={group.name} />
+    </div>
+  );
 };
 
 export default GroupDashboard;

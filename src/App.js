@@ -10,6 +10,7 @@ import LoginPage from "./components/Login/LoginPage";
 import Register from "./components/Register/Register";
 import { useSelector, useDispatch } from "react-redux";
 import { persistLogin } from "./store/actions/userActions";
+import DonationsPage from "./components/Donations/DonationsPage";
 
 function App() {
   const state = useSelector(state => state);
@@ -46,6 +47,10 @@ function App() {
       <Route path="/about">
         <NavBar />
         <About />
+      </Route>
+      <Route path="/donate">
+        <NavBar />
+        <DonationsPage />
       </Route>
       <Route path="/dashboard">
         <Dashboard />

@@ -4,6 +4,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { CardActionArea } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   cardAction: {
@@ -40,8 +41,14 @@ const useStyles = makeStyles({
 
 const GroupCard = ({ group }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(`/dashboard/groups/${group._id}`);
+  };
+
   return (
-    <CardActionArea className={classes.cardAction}>
+    <CardActionArea onClick={handleClick} className={classes.cardAction}>
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography className={classes.title} variant="h5" component="h2">
