@@ -1,6 +1,6 @@
 import React from "react";
 import ImageForm from "../ImageForm/ImageForm";
-import bgImg from "../../images/people1.jpg";
+import bgImg from "../../images/donate1.jpg";
 import styled from "styled-components";
 import IconInput from "../ImageForm/IconInput";
 
@@ -10,9 +10,13 @@ const FormContainer = styled.div`
 `;
 
 const DonationsPage = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log("Donation submit");
+  };
   return (
     <FormContainer>
-      <ImageForm img={bgImg}>
+      <ImageForm loading={true} img={bgImg} handleSubmit={handleSubmit}>
         <h2>Login</h2>
         <p>Enter your details below to continue</p>
         <IconInput
@@ -21,7 +25,7 @@ const DonationsPage = () => {
           value="Test Value"
           iconClass="fas fa-lock"
         />
-        <button disabled={false}>Login</button>
+        <button>Login</button>
       </ImageForm>
     </FormContainer>
   );
