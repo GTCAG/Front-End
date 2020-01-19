@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { StripeProvider } from "react-stripe-elements";
 
 //Redux
 import { createStore, applyMiddleware } from "redux";
@@ -14,7 +15,9 @@ const store = createStore(userReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+      <App />
+    </StripeProvider>
   </Provider>,
   document.getElementById("root")
 );

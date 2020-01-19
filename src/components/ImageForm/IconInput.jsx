@@ -10,9 +10,10 @@ const IconInput = ({
   iconClass
 }) => {
   return (
-    <div className={`icon-input` + (disabled ? " disabled" : "")}>
+    <div className={`icon-input-container` + (disabled ? " disabled" : "")}>
       <i className={iconClass}></i>
       <input
+        className="icon-input"
         type={type}
         name={name}
         placeholder={placeholder}

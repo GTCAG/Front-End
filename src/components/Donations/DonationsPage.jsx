@@ -3,6 +3,8 @@ import ImageForm from "../ImageForm/ImageForm";
 import bgImg from "../../images/donate1.jpg";
 import styled from "styled-components";
 import IconInput from "../ImageForm/IconInput";
+import DonationsForm from "./DonationsForm";
+import { Elements } from "react-stripe-elements";
 
 const FormContainer = styled.div`
   height: 600px;
@@ -15,19 +17,11 @@ const DonationsPage = () => {
     console.log("Donation submit");
   };
   return (
-    <FormContainer>
-      <ImageForm loading={true} img={bgImg} handleSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <p>Enter your details below to continue</p>
-        <IconInput
-          type="password"
-          name="something"
-          value="Test Value"
-          iconClass="fas fa-lock"
-        />
-        <button>Login</button>
-      </ImageForm>
-    </FormContainer>
+    <div>
+      <Elements>
+        <DonationsForm handleSubmit={handleSubmit} />
+      </Elements>
+    </div>
   );
 };
 
