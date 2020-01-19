@@ -3,6 +3,7 @@ import ImageForm from "../ImageForm/ImageForm";
 import bgImg from "../../images/donate1.jpg";
 import styled from "styled-components";
 import { CardElement, injectStripe } from "react-stripe-elements";
+import axios from "axios";
 
 const FormContainer = styled.div`
   height: 600px;
@@ -104,15 +105,24 @@ const AmountContainer = styled.div`
   }
 `;
 
-const DonationsForm = ({ handleSubmit }) => {
+const DonationsForm = ({ stripe }) => {
   const [amount, setAmount] = useState(0);
-  console.log(typeof amount);
+  const [processing, setProcessing] = useState(false);
+
   const handleAmountChange = e => {
     setAmount(e.target.value);
   };
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setProcessing(true);
+    const { token } = await stripe.createToken({ name: "Name" });
+    console.log("Token: ", token);
+    setProcessing(false);
+  };
+
   return (
     <FormContainer>
-      <ImageForm loading={false} img={bgImg} handleSubmit={handleSubmit}>
+      <ImageForm img={bgImg} handleSubmit={handleSubmit}>
         <h2>Donate by Card</h2>
         <p>Enter an amount to give</p>
         <AmountContainer>
@@ -129,7 +139,9 @@ const DonationsForm = ({ handleSubmit }) => {
         <CardInput>
           <CardElement {...createOptions()} />
         </CardInput>
-        <button>Pay</button>
+        <button type="submit" disabled={processing}>
+          Pay
+        </button>
       </ImageForm>
     </FormContainer>
   );
