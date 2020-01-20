@@ -6,7 +6,7 @@ import { CardElement, injectStripe } from "react-stripe-elements";
 import axios from "axios";
 
 const FormContainer = styled.div`
-  height: 600px;
+  height: 650px;
   width: 100%;
 `;
 
@@ -39,12 +39,51 @@ const CardInput = styled.div`
     border-radius: 4px;
     background: white;
     margin: 10px 0 20px 0;
-    font-family: "Source Code Pro", monospace;
+    // font-family: "Source Code Pro", monospace;
+    font-family: Open Sans, sans-serif;
 
     max-width: 500px;
   }
   &:focus,
   .StripeElement--focus {
+    box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
+      rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+  }
+`;
+
+const InputLabel = styled.label`
+  font-family: Open Sans, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+
+  color: #6b7c93;
+  // font-weight: 300;
+  letter-spacing: 0.025em;
+  cursor: default;
+`;
+
+const InputField = styled.input`
+  padding: 20px 14px;
+  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
+    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
+  border: 0;
+  outline: 0;
+  color: #424770;
+  border-radius: 4px;
+  background: white;
+  margin: 10px 0 20px 0;
+  font-family: Open Sans, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  max-width: 500px;
+
+  &::placeholder {
+    color: #aab7c4;
+  }
+
+  &:focus {
     box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
       rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
     -webkit-transition: all 150ms ease;
@@ -107,16 +146,28 @@ const AmountContainer = styled.div`
 
 const DonationsForm = ({ stripe }) => {
   const [amount, setAmount] = useState(0);
+  const [name, setName] = useState("");
   const [processing, setProcessing] = useState(false);
 
   const handleAmountChange = e => {
     setAmount(e.target.value);
   };
+
   const handleSubmit = async e => {
     e.preventDefault();
     setProcessing(true);
-    const { token } = await stripe.createToken({ name: "Name" });
+    const { token } = await stripe.createToken({ name });
     console.log("Token: ", token);
+
+    axios
+      .post("http://localhost:4000/charge", { id: token.id, amount: amount })
+      .then(res => {
+        console.log("Response: ", res);
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+
     setProcessing(false);
   };
 
@@ -135,7 +186,16 @@ const DonationsForm = ({ stripe }) => {
             step="0.01"
           />
         </AmountContainer>
-
+        <InputLabel htmlFor="name">Full Name</InputLabel>
+        <InputField
+          type="text"
+          placeholder="John Doe"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          id="name"
+          name="name"
+        />
+        <InputLabel>Card Details</InputLabel>
         <CardInput>
           <CardElement {...createOptions()} />
         </CardInput>

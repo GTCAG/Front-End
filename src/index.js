@@ -15,7 +15,7 @@ const store = createStore(userReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+    <StripeProvider apiKey="pk_test_FXaiNXQxOIn3nTK7ewHFBQIc00JTrRv9n9">
       <App />
     </StripeProvider>
   </Provider>,
