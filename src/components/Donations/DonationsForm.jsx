@@ -145,7 +145,7 @@ const AmountContainer = styled.div`
 `;
 
 const DonationsForm = ({ stripe }) => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(0.0);
   const [name, setName] = useState("");
   const [processing, setProcessing] = useState(false);
 

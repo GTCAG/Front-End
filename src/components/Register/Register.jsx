@@ -9,6 +9,23 @@ import bgImg from "../../images/abstract2.jpg";
 import "./Register.scss";
 import ImageForm from "../ImageForm/ImageForm";
 import IconInput from "../ImageForm/IconInput";
+import styled from "styled-components";
+
+const HalfInput = styled.input`
+  box-sizing: border-box;
+  border-style: none;
+  padding: 8px 15px;
+  color: rgb(83, 83, 83);
+  width: 30%;
+  font-size: 18px;
+  background-color: #eeeeee;
+  outline: none;
+
+  &:disabled {
+    background-color: $disabled-input-bg;
+  }
+`;
+
 const initialFormData = {
   email: "",
   password: "",
@@ -16,6 +33,7 @@ const initialFormData = {
   firstName: "",
   lastName: ""
 };
+
 const Register = () => {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = useState(initialFormData);
@@ -151,7 +169,7 @@ const Register = () => {
         <p className="form-error">{formErrors.firstName}</p>
       )}
       <div className="half-input-container">
-        <input
+        <HalfInput
           type="text"
           name="firstName"
           placeholder="First Name"
@@ -159,7 +177,7 @@ const Register = () => {
           disabled={isRegistering}
           onChange={handleChange}
         />
-        <input
+        <HalfInput
           type="text"
           name="lastName"
           placeholder="Last Name"
