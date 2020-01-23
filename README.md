@@ -1,20 +1,25 @@
 TODO:
--Color card titles later on. (UX)
 
--Payment/Donation handling
--Stripe for card payments.
--Backend implementation
--Front end form completion
+Library:
+-Color card titles later on. (UX)
+-Finish join by group code (Back-end/Front-end)
+-Detailed group dashboard view
+-Admin view of group dashboard
+-Create events
+-create new song
+-Upload files to AWS
+-Manage team members
+
+-User group view (members)
+-View events
+-Event view
+-Song list
+-Song view (files/attachments/key/bpm)
+
+Donation page:
 -Confirmation messages
 -Error messages
--Amount to donate.
 -Paypal (Research needed)
-
--Optimize images (load time)
-
--Add animation to image forms
-
--Hamburger transition from close-open
 
 TODO Errors:
 -Fix error doing persist when no token in localstorage
