@@ -53,7 +53,7 @@ const NavBar = () => {
     }
   }, [open]);
 
-  const handleMenuClick = () => {
+  const handleMenuClick = e => {
     setOpen(!open);
   };
 
@@ -70,7 +70,7 @@ const NavBar = () => {
           </div>
           <button
             onClick={handleMenuClick}
-            className={`hamburger${open ? ` hamburger--slider` : ""}`}
+            className={`hamburger hamburger--slider${open ? ` is-active` : ""}`}
             type="button"
           >
             <span className="hamburger-box">
