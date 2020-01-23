@@ -14,5 +14,7 @@ TODO:
 
 -Add animation to image forms
 
+-Hamburger transition from close-open
+
 TODO Errors:
 -Fix error doing persist when no token in localstorage
