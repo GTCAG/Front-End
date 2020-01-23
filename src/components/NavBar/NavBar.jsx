@@ -13,16 +13,12 @@ const MenuLinks = styled.div`
   align-items: center;
 
   a {
-    // padding-top: 5px;
-    // width: fit-content;
-
     text-decoration: none;
     text-align: center;
     font-family: Open Sans, sans-serif;
     font-size: 16px;
     font-weight: 500;
     color: #6b7c93;
-    margin-left: 35px;
     &:after {
       content: "";
       display: block;
