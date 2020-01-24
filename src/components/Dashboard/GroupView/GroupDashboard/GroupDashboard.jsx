@@ -44,6 +44,7 @@ const GroupDashboard = () => {
   return (
     <div className={classes.root}>
       <GroupAppBar title={group.name} />
+  <h2>Join Code: {group.code}</h2>
     </div>
   );
 };

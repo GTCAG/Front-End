@@ -8,6 +8,8 @@ export function axiosAuth() {
 
   return axios.create({
     baseURL: "https://gtcag.herokuapp.com",
+    // baseURL: "http://localhost:4000",
+
     headers: {
       "Content-Type": "application/json",
       Authorization: `${token}`

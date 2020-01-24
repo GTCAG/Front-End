@@ -111,8 +111,30 @@ const GroupView = () => {
 
   const handleGroupJoin = () => {
     // setGroupDialog(false);
-    console.log("Test");
+    if (inputText.length === 0) {
+      alert("Code field cannot be empty");
+      return;
+    }
+    
     setWaiting(true);
+
+    axiosAuth()
+    .post("/groups/join", {code: inputText})
+    .then(res => {
+      console.log("Response: ", res);
+      setOpen(false);
+        setWaiting(false);
+        setSnack({ open: true, message: `Successfuly joined ${inputText}!` });
+        setInputText("");
+    })
+    .catch(err => {
+      console.log("Error res: ", err.response);
+      setOpen(false);
+        setWaiting(false);
+        setSnack({ open: true, message: "Failed to join group" });
+    })
+
+
   };
 
   const handleGroupCreate = () => {
@@ -130,6 +152,7 @@ const GroupView = () => {
         setOpen(false);
         setWaiting(false);
         setSnack({ open: true, message: `Group ${inputText} created` });
+        setInputText("");
       })
       .catch(err => {
         console.log("Error making group: ", err.response);
