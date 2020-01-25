@@ -2,14 +2,12 @@ TODO:
 
 Library:
 -Color card titles later on. (UX)
--Finish join by group code (Back-end/Front-end)
 -Detailed group dashboard view
 -Admin view of group dashboard
 -Create events
 -create new song
 -Upload files to AWS
 -Manage team members
-
 -User group view (members)
 -View events
 -Event view

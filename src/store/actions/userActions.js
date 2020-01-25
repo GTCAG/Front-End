@@ -32,19 +32,21 @@ export const login = credentials => dispatch => {
 };
 
 export const persistLogin = () => dispatch => {
-  axiosAuth()
-    .get("/users/whoami")
-    .then(res => {
-      console.log("res, ", res);
-      const { userId, email, firstName, lastName } = res.data;
-      dispatch({
-        type: PERSIST_LOGIN,
-        payload: { userId, email, firstName, lastName }
+  const token = localStorage.getItem("authToken");
+  if (token)
+    axiosAuth()
+      .get("/users/whoami")
+      .then(res => {
+        console.log("res, ", res);
+        const { userId, email, firstName, lastName } = res.data;
+        dispatch({
+          type: PERSIST_LOGIN,
+          payload: { userId, email, firstName, lastName }
+        });
+      })
+      .catch(err => {
+        console.log("Error doing persist,", err.response);
       });
-    })
-    .catch(err => {
-      console.log("Error doing persist,", err.response);
-    });
 };
 
 export const register = (user, handleSuccess) => dispatch => {
