@@ -5,6 +5,10 @@ import styled from "styled-components";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import axios from "axios";
 
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
 const FormContainer = styled.div`
   height: 650px;
   width: 100%;
@@ -148,37 +152,77 @@ const DonationsForm = ({ stripe }) => {
   const [amount, setAmount] = useState(0.0);
   const [name, setName] = useState("");
   const [processing, setProcessing] = useState(false);
-
+  const [snack, setSnack] = useState({ open: false, message: "" });
   const handleAmountChange = e => {
     setAmount(e.target.value);
   };
 
+  const handleSnackClose = () => {
+    setSnack({ open: false, message: "" });
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
+    if (amount < 0.5) {
+      setSnack({
+        open: true,
+        message: "Donation amount must be a minimum of $0.50"
+      });
+      return;
+    }
+
     setProcessing(true);
     const { token } = await stripe.createToken({ name });
     console.log("Token: ", token);
-
-    axios
-      .post("http://localhost:4000/charge", { id: token.id, amount: amount })
-      .then(res => {
-        console.log("Response: ", res);
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
-
+    if (token)
+      axios
+        .post("http://localhost:4000/charge", { id: token.id, amount: amount })
+        .then(res => {
+          console.log("Response: ", res);
+          setSnack({ open: true, message: "Donation received. Thank you!" });
+          setAmount(0.0);
+        })
+        .catch(err => {
+          console.log(err.response);
+          setSnack({ open: true, message: "Error processing payment." });
+        });
+    else {
+      setSnack({ open: true, message: "Card invalid" });
+    }
     setProcessing(false);
   };
 
   return (
     <FormContainer>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={snack.open}
+        autoHideDuration={6000}
+        onClose={handleSnackClose}
+        message={snack.message}
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleSnackClose}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
       <ImageForm img={bgImg} handleSubmit={handleSubmit}>
         <h2>Donate by Card</h2>
         <p>Enter an amount to give</p>
         <AmountContainer>
           $
           <AmountInput
+            id="amount-input"
             type="number"
             onChange={handleAmountChange}
             value={amount}

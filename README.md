@@ -15,9 +15,6 @@ Library:
 -Song view (files/attachments/key/bpm)
 
 Donation page:
--Confirmation messages
--Error messages
 -Paypal (Research needed)
 
 TODO Errors:
--Fix error doing persist when no token in localstorage
