@@ -6,18 +6,20 @@ import DashboardHome from "./DashboardHome";
 import SongsView from "./SongsView";
 import GroupView from "./GroupView/GroupView";
 import GroupDashboard from "./GroupView/GroupDashboard/GroupDashboard";
+import DashboardAppBar from "./DashboardAppBar";
 
 //Color Palette: D88A83 - BA6C65 - F2BE8D - 394359  - 303242
 
 const DashboardContainer = styled.div`
-  display: flex;
-  height: 100%;
+  // display: flex;
+  // height: 100%;
 `;
 
 const Dashboard = () => {
   return (
     <DashboardContainer>
-      <DashboardMenu />
+      {/* <DashboardMenu /> */}
+      <DashboardAppBar title="Dashboard" />
       <Route exact path="/dashboard/">
         <DashboardHome />
       </Route>

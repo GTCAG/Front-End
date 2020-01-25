@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { axiosAuth } from "../../../../axiosWithAuth";
-import GroupAppBar from "./GroupAppBar";
+import GroupAppBar from "../../DashboardAppBar";
 
 const initialGroupState = {
   admins: [],
@@ -43,8 +43,7 @@ const GroupDashboard = () => {
   console.log("group: ", group);
   return (
     <div className={classes.root}>
-      <GroupAppBar title={group.name} />
-  <h2>Join Code: {group.code}</h2>
+      <h2>Join Code: {group.code}</h2>
     </div>
   );
 };
