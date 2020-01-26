@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-
 import { axiosAuth } from "../../../../axiosWithAuth";
-import GroupAppBar from "../../DashboardAppBar";
+import EventBubble from "./EventBubble";
 
 const initialGroupState = {
   admins: [],
@@ -16,6 +15,9 @@ const initialGroupState = {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
+  },
+  eventList: {
+    margin: 50
   }
 }));
 
@@ -44,6 +46,16 @@ const GroupDashboard = () => {
   return (
     <div className={classes.root}>
       <h2>Join Code: {group.code}</h2>
+      <div className={classes.eventList}>
+        <h3>Events</h3>
+
+        <EventBubble />
+        <EventBubble />
+        <EventBubble />
+        <EventBubble />
+        <EventBubble />
+        <EventBubble />
+      </div>
     </div>
   );
 };
