@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,8 +14,6 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 
 import LibraryMusicRoundedIcon from "@material-ui/icons/LibraryMusicRounded";
 import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
@@ -43,10 +41,37 @@ const useStyles = makeStyles(theme => ({
 
 const GroupAppBar = ({ title }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState("Dashboard");
+  const history = useHistory();
+  const location = useLocation();
   const classes = useStyles();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/dashboard":
+        break;
+      case "/dashboard/settings":
+        setCurrentTitle("Settings");
+        break;
+      case "/dashboard/songs":
+        setCurrentTitle("Songs");
+        break;
+      case "/dashboard/groups":
+        setCurrentTitle("Groups");
+        break;
+      default:
+        setCurrentTitle("Dashboard");
+        break;
+    }
+  }, []);
 
   const handleMenuClose = () => {
     setMenuOpen(false);
+  };
+
+  const handleMenuNavClick = (dest, title) => {
+    history.push(dest);
+    setCurrentTitle(title);
   };
 
   return (
@@ -63,7 +88,7 @@ const GroupAppBar = ({ title }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {title}
+            {currentTitle}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -74,7 +99,10 @@ const GroupAppBar = ({ title }) => {
           onClick={() => setMenuOpen(false)}
         >
           <List>
-            <ListItem button>
+            <ListItem
+              button
+              onClick={() => handleMenuNavClick("/dashboard", "Dashboard")}
+            >
               <ListItemIcon>
                 <DashboardRoundedIcon />
               </ListItemIcon>
@@ -84,13 +112,21 @@ const GroupAppBar = ({ title }) => {
               />
             </ListItem>
 
-            <ListItem button>
+            <ListItem
+              button
+              onClick={() => handleMenuNavClick("/dashboard/groups", "Groups")}
+            >
               <ListItemIcon>
                 <GroupRoundedIcon />
               </ListItemIcon>
               <ListItemText primary="Groups" />
             </ListItem>
-            <ListItem button>
+            <ListItem
+              button
+              onClick={() =>
+                handleMenuNavClick("/dashboard/songs", "Song List")
+              }
+            >
               <ListItemIcon>
                 <LibraryMusicRoundedIcon />
               </ListItemIcon>
@@ -99,7 +135,12 @@ const GroupAppBar = ({ title }) => {
           </List>
           <Divider />
           <List>
-            <ListItem button>
+            <ListItem
+              button
+              onClick={() =>
+                handleMenuNavClick("/dashboard/settings", "Settings")
+              }
+            >
               <ListItemIcon>
                 <SettingsRoundedIcon />
               </ListItemIcon>

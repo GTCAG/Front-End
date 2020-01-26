@@ -22,7 +22,6 @@ import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles(() => ({
   root: {
     display: "grid",
-    width: "100%",
     gridTemplateColumns: "repeat( auto-fit, minmax(250px, 1fr) )",
     // gridTemplateRows: "auto",
     paddingBottom: 10,
@@ -52,7 +51,6 @@ const useStyles = makeStyles(() => ({
     margin: "0 auto"
   },
   viewContainer: {
-    width: "100%",
     margin: "25px 0px 25px 25px",
     paddingRight: 25,
     overflowY: "auto"
@@ -115,26 +113,24 @@ const GroupView = () => {
       alert("Code field cannot be empty");
       return;
     }
-    
+
     setWaiting(true);
 
     axiosAuth()
-    .post("/groups/join", {code: inputText})
-    .then(res => {
-      console.log("Response: ", res);
-      setOpen(false);
+      .post("/groups/join", { code: inputText })
+      .then(res => {
+        console.log("Response: ", res);
+        setOpen(false);
         setWaiting(false);
         setSnack({ open: true, message: `Successfuly joined ${inputText}!` });
         setInputText("");
-    })
-    .catch(err => {
-      console.log("Error res: ", err.response);
-      setOpen(false);
+      })
+      .catch(err => {
+        console.log("Error res: ", err.response);
+        setOpen(false);
         setWaiting(false);
         setSnack({ open: true, message: "Failed to join group" });
-    })
-
-
+      });
   };
 
   const handleGroupCreate = () => {
