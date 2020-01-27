@@ -6,7 +6,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 const MemberBubble = ({ member }) => {
   return (
     <ListItem>
-      {/* <ListItemText primary={member.name} secondary={member.role} /> */}
+      <ListItemText primary={member.user.firstName} secondary={member.role} />
     </ListItem>
   );
 };

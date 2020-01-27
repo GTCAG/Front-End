@@ -51,7 +51,9 @@ const MemberList = ({ members }) => {
           </Typography>
         </AppBar>
         <List>
-          <MemberBubble />
+          {members.map((member, key) => (
+            <MemberBubble member={member} key={key} />
+          ))}
         </List>
       </Card>
     </div>
