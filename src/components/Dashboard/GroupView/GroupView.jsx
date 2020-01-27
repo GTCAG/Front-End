@@ -21,6 +21,8 @@ import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles(() => ({
   root: {
+    margin: "0 auto",
+    maxWidth: 1300,
     display: "grid",
     gridTemplateColumns: "repeat( auto-fit, minmax(250px, 1fr) )",
     // gridTemplateRows: "auto",

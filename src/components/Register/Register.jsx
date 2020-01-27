@@ -96,7 +96,8 @@ const Register = () => {
           {
             email: formData.email,
             password: formData.password,
-            firstName: formData.firstName
+            firstName: formData.firstName,
+            lastName: formData.lastName
           },
           handleSuccess
         )

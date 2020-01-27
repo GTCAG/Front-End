@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { axiosAuth } from "../../../../axiosWithAuth";
 import EventBubble from "./EventBubble";
+import MemberList from "./MemberList";
 
 const initialGroupState = {
   admins: [],
@@ -14,10 +15,26 @@ const initialGroupState = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding: 25,
+    margin: "0 auto",
+    [theme.breakpoints.down("xs")]: {
+      padding: 10
+    },
+    maxWidth: 1200
   },
   eventList: {
-    margin: 50
+    width: "75%",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%"
+    }
+  },
+  infoContainer: {
+    display: "flex",
+    boxSizing: "border-box",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column"
+    }
   }
 }));
 
@@ -46,15 +63,20 @@ const GroupDashboard = () => {
   return (
     <div className={classes.root}>
       <h2>Join Code: {group.code}</h2>
-      <div className={classes.eventList}>
-        <h3>Events</h3>
 
-        <EventBubble />
-        <EventBubble />
-        <EventBubble />
-        <EventBubble />
-        <EventBubble />
-        <EventBubble />
+      <div className={classes.infoContainer}>
+        <div className={classes.eventList}>
+          <h3>Events</h3>
+
+          <EventBubble />
+          <EventBubble />
+          <EventBubble />
+          <EventBubble />
+          <EventBubble />
+          <EventBubble />
+        </div>
+
+        <MemberList members={group.members} />
       </div>
     </div>
   );
