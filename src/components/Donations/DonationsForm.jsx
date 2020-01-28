@@ -3,11 +3,11 @@ import ImageForm from "../ImageForm/ImageForm";
 import bgImg from "../../images/donate1.jpg";
 import styled from "styled-components";
 import { CardElement, injectStripe } from "react-stripe-elements";
-import axios from "axios";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import { axiosAuth } from "../../axiosWithAuth";
 
 const FormContainer = styled.div`
   height: 650px;
@@ -171,25 +171,29 @@ const DonationsForm = ({ stripe }) => {
       return;
     }
 
-    setProcessing(true);
     const { token } = await stripe.createToken({ name });
+    setProcessing(true);
+
     console.log("Token: ", token);
+
     if (token)
-      axios
-        .post("http://localhost:4000/charge", { id: token.id, amount: amount })
+      axiosAuth()
+        .post("/charge", { id: token.id, amount: amount })
         .then(res => {
           console.log("Response: ", res);
           setSnack({ open: true, message: "Donation received. Thank you!" });
           setAmount(0.0);
+          setProcessing(false);
         })
         .catch(err => {
           console.log(err.response);
           setSnack({ open: true, message: "Error processing payment." });
+          setProcessing(false);
         });
     else {
       setSnack({ open: true, message: "Card invalid" });
+      setProcessing(false);
     }
-    setProcessing(false);
   };
 
   return (
@@ -216,7 +220,7 @@ const DonationsForm = ({ stripe }) => {
           </React.Fragment>
         }
       />
-      <ImageForm img={bgImg} handleSubmit={handleSubmit}>
+      <ImageForm loading={processing} img={bgImg} handleSubmit={handleSubmit}>
         <h2>Donate by Card</h2>
         <p>Enter an amount to give</p>
         <AmountContainer>
