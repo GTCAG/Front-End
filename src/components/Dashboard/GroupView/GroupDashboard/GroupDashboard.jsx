@@ -5,6 +5,9 @@ import { axiosAuth } from "../../../../axiosWithAuth";
 import EventBubble from "./EventBubble";
 import { Button } from "@material-ui/core";
 import MemberList from "./MemberList";
+import CreateEventDialog from "./CreateEventDialog";
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 const initialGroupState = {
   admins: [],
@@ -60,6 +63,7 @@ const GroupDashboard = () => {
   //Hooks
   const params = useParams();
   const [group, setGroup] = useState(initialGroupState);
+  const [evtDialogOpen, setEvtDialogOpen] = useState(false);
   const groupId = params.groupId;
 
   const classes = useStyles();
@@ -77,10 +81,8 @@ const GroupDashboard = () => {
       });
   }, []);
 
-  console.log("group: ", group);
-
   const handleCreateEvent = () => {
-    console.log("Clicked");
+    setEvtDialogOpen(true);
   };
 
   return (
@@ -115,6 +117,14 @@ const GroupDashboard = () => {
 
         <MemberList members={group.members} />
       </div>
+
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <CreateEventDialog
+          groupId={group._id}
+          open={evtDialogOpen}
+          handleClose={() => setEvtDialogOpen(false)}
+        />
+      </MuiPickersUtilsProvider>
     </div>
   );
 };
