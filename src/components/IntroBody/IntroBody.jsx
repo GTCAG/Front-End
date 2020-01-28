@@ -1,38 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded";
 import VideoLibraryRoundedIcon from "@material-ui/icons/VideoLibraryRounded";
 import "./IntroBody.scss";
 import { makeStyles } from "@material-ui/core/styles";
+import { axiosAuth } from "../../axiosWithAuth";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   icon: {
     fontSize: "70px"
   },
   videoContainer: {
+    flexGrow: 1,
     height: 650,
     width: "100%",
-    marginTop: 15
+    maxWidth: 1800,
+    marginTop: 15,
+    marginBottom: 25,
+    [theme.breakpoints.down("xs")]: {
+      height: 450
+    }
   }
 }));
 
 const IntroBody = () => {
+  const [live, setLive] = useState(false);
+
+  useEffect(() => {
+    axiosAuth()
+      .get("/livestream")
+      .then(res => {
+        console.log("Livestream res, ", res);
+        setLive(res.data.live);
+      })
+      .catch(err => {
+        console.log("Livestream err", err.response);
+      });
+  }, []);
+
   const classes = useStyles();
   return (
     <div className="body-container">
-      <div className="text-block dark">
-        <div className="text-content-wrapper max-size">
-          <h2>Check out our livestream!</h2>
-          <iframe
-            className={classes.videoContainer}
-            width="560"
-            height="650"
-            src="https://www.youtube.com/embed/live_stream?channel=UCNaKPci4jHkzFyo2hYwlVRQ"
-            frameborder="0"
-            allowfullscreen="true"
-          ></iframe>
+      {live ? (
+        <div className="text-block dark">
+          <div className="text-content-wrapper max-size">
+            <h2>We're live right now!</h2>
+            <iframe
+              className={classes.videoContainer}
+              width="560"
+              height="650"
+              src="https://www.youtube.com/embed/live_stream?channel=UCNaKPci4jHkzFyo2hYwlVRQ"
+              frameborder="0"
+              allowfullscreen="true"
+            ></iframe>
+          </div>
         </div>
-      </div>
+      ) : null}
+
       <div className="text-block light">
         <h2>Can't Attend?</h2>
         <div className="text-block-flex max-size">
