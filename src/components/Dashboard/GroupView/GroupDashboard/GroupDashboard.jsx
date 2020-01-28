@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { axiosAuth } from "../../../../axiosWithAuth";
 import EventBubble from "./EventBubble";
+import { Button } from "@material-ui/core";
 import MemberList from "./MemberList";
 
 const initialGroupState = {
@@ -35,6 +36,23 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column"
     }
+  },
+  toolbar: {
+    display: "flex",
+    height: 40,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 25,
+    borderBottom: "1px solid #ddd"
+  },
+  groupName: {
+    margin: 0,
+    padding: 0
+  },
+  joinCode: {
+    margin: 0,
+    color: "#777",
+    fontFamily: "Roboto"
   }
 }));
 
@@ -60,9 +78,28 @@ const GroupDashboard = () => {
   }, []);
 
   console.log("group: ", group);
+
+  const handleCreateEvent = () => {
+    console.log("Clicked");
+  };
+
   return (
     <div className={classes.root}>
-      <h2>Join Code: {group.code}</h2>
+      <div className={classes.toolbar}>
+        <div className={classes.titleContainer}>
+          <h1 className={classes.groupName}>{group.name}</h1>
+          <p className={classes.joinCode}>Join Code: {group.code}</p>
+        </div>
+
+        <Button
+          color="primary"
+          className={classes.createEventButton}
+          variant="contained"
+          onClick={handleCreateEvent}
+        >
+          Create New Event
+        </Button>
+      </div>
 
       <div className={classes.infoContainer}>
         <div className={classes.eventList}>
