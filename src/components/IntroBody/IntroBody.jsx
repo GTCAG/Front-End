@@ -8,6 +8,11 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(() => ({
   icon: {
     fontSize: "70px"
+  },
+  videoContainer: {
+    height: 650,
+    width: "100%",
+    marginTop: 15
   }
 }));
 
@@ -15,6 +20,19 @@ const IntroBody = () => {
   const classes = useStyles();
   return (
     <div className="body-container">
+      <div className="text-block dark">
+        <div className="text-content-wrapper max-size">
+          <h2>Check out our livestream!</h2>
+          <iframe
+            className={classes.videoContainer}
+            width="560"
+            height="650"
+            src="https://www.youtube.com/embed/live_stream?channel=UCNaKPci4jHkzFyo2hYwlVRQ"
+            frameborder="0"
+            allowfullscreen="true"
+          ></iframe>
+        </div>
+      </div>
       <div className="text-block light">
         <h2>Can't Attend?</h2>
         <div className="text-block-flex max-size">

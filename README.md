@@ -1,7 +1,6 @@
 TODO:
 
 Library:
--Color card titles later on. (UX)
 -Detailed group dashboard view
 -Admin view of group dashboard
 -Create events
@@ -15,6 +14,6 @@ Library:
 -Song view (files/attachments/key/bpm)
 
 Donation page:
--Paypal (Research needed)
+-Paypal (Research needed)/
 
 TODO Errors:
