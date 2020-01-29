@@ -3,6 +3,8 @@ export const LOGIN_START = "LOGIN_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
+export const LOGOUT = "LOGOUT";
+
 export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
@@ -47,6 +49,11 @@ export const persistLogin = () => dispatch => {
       .catch(err => {
         console.log("Error doing persist,", err.response);
       });
+};
+
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
+  localStorage.removeItem("authToken");
 };
 
 export const register = (user, handleSuccess) => dispatch => {

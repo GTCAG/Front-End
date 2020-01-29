@@ -5,7 +5,8 @@ import {
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   REGISTER_START,
-  PERSIST_LOGIN
+  PERSIST_LOGIN,
+  LOGOUT
 } from "../actions/userActions";
 
 const initialState = {
@@ -24,6 +25,15 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOGOUT:
+      return {
+        ...state,
+        loggedIn: false,
+        firstName: "",
+        lastName: "",
+        userId: "",
+        email: ""
+      };
     case PERSIST_LOGIN:
       const { firstName, lastName, userId, email } = action.payload;
       return { ...state, loggedIn: true, firstName, lastName, userId, email };

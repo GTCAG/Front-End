@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/actions/userActions";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -18,6 +20,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import LibraryMusicRoundedIcon from "@material-ui/icons/LibraryMusicRounded";
 import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import GroupRoundedIcon from "@material-ui/icons/GroupRounded";
 
 const useStyles = makeStyles(theme => ({
@@ -44,6 +47,7 @@ const GroupAppBar = ({ title }) => {
   const [currentTitle, setCurrentTitle] = useState("Dashboard");
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
@@ -67,6 +71,11 @@ const GroupAppBar = ({ title }) => {
 
   const handleMenuClose = () => {
     setMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/login");
   };
 
   const handleMenuNavClick = (dest, title) => {
@@ -145,6 +154,12 @@ const GroupAppBar = ({ title }) => {
                 <SettingsRoundedIcon />
               </ListItemIcon>
               <ListItemText primary="Settings" />
+            </ListItem>
+            <ListItem button onClick={() => handleLogout()}>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sign Out" />
             </ListItem>
           </List>
         </div>

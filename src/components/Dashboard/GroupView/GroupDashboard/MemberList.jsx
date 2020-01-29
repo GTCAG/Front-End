@@ -45,7 +45,7 @@ const MemberList = ({ members }) => {
   return (
     <div className={classes.root}>
       <Card className={classes.card}>
-        <AppBar className={classes.barRoot} position="">
+        <AppBar className={classes.barRoot} position="static">
           <Typography variant="h6" className={classes.title}>
             Members
           </Typography>
