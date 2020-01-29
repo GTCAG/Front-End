@@ -10,6 +10,7 @@
     "axios": "^0.19.0",
     "clsx": "^1.0.4",
     "date-fns": "^2.9.0",
+    "dateformat": "^3.0.3",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",

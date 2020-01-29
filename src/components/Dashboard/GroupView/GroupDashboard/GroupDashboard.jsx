@@ -106,13 +106,9 @@ const GroupDashboard = () => {
       <div className={classes.infoContainer}>
         <div className={classes.eventList}>
           <h3>Events</h3>
-
-          <EventBubble />
-          <EventBubble />
-          <EventBubble />
-          <EventBubble />
-          <EventBubble />
-          <EventBubble />
+          {group.events.map((event, key) => (
+            <EventBubble event={event} key={key} />
+          ))}
         </div>
 
         <MemberList members={group.members} />
