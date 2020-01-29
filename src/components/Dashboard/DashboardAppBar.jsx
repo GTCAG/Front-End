@@ -22,6 +22,7 @@ import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import GroupRoundedIcon from "@material-ui/icons/GroupRounded";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -141,6 +142,12 @@ const GroupAppBar = ({ title }) => {
               </ListItemIcon>
               <ListItemText primary="Song Library" />
             </ListItem>
+            <ListItem button onClick={() => history.push("/")}>
+              <ListItemIcon>
+                <ArrowBackIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
           </List>
           <Divider />
           <List>
@@ -155,6 +162,7 @@ const GroupAppBar = ({ title }) => {
               </ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItem>
+
             <ListItem button onClick={() => handleLogout()}>
               <ListItemIcon>
                 <ExitToAppIcon />
