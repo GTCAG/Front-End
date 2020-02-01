@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   card: {
     display: "flex",
     justifyContent: "space-between",
-    padding: 30,
+    padding: 20,
     marginBottom: 20
   },
   eventTitle: {
