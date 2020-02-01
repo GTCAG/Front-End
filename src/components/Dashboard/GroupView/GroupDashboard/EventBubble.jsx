@@ -6,11 +6,16 @@ import dateFormat from "dateformat";
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
 
+import CardActionArea from "@material-ui/core/CardActionArea";
+
 const useStyles = makeStyles({
   card: {
     display: "flex",
     justifyContent: "space-between",
-    padding: 20,
+    padding: 20
+  },
+  cardcontainer: {
+    boxSizing: "border-box",
     marginBottom: 20
   },
   eventTitle: {
@@ -29,15 +34,17 @@ const EventBubble = ({ event }) => {
   const [localDate] = useState(new Date(event.date));
   const classes = useStyles();
   return (
-    <Card className={classes.card}>
-      <Typography variant="h5" className={classes.eventTitle}>
-        {event.name}
-      </Typography>
-      <Divider className={classes.divider} orientation="vertical" />
+    <Card className={classes.cardcontainer}>
+      <CardActionArea className={classes.card}>
+        <Typography variant="h5" className={classes.eventTitle}>
+          {event.name}
+        </Typography>
+        <Divider className={classes.divider} orientation="vertical" />
 
-      <Typography variant="h6" className={classes.eventDate}>
-        {dateFormat(localDate, "mmmm dS, h:MM TT")}
-      </Typography>
+        <Typography variant="h6" className={classes.eventDate}>
+          {dateFormat(localDate, "mmmm dS, h:MM TT")}
+        </Typography>
+      </CardActionArea>
     </Card>
   );
 };
