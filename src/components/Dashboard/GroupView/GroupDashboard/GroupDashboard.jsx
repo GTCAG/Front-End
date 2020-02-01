@@ -42,11 +42,14 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: {
     display: "flex",
-    height: 40,
+    height: "100%",
     justifyContent: "space-between",
     alignItems: "center",
     paddingBottom: 25,
-    borderBottom: "1px solid #ddd"
+    borderBottom: "1px solid #ddd",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column"
+    }
   },
   groupName: {
     margin: 0,
@@ -56,6 +59,12 @@ const useStyles = makeStyles(theme => ({
     margin: 0,
     color: "#777",
     fontFamily: "Roboto"
+  },
+  createEventButton: {
+    marginTop: 12,
+    [theme.breakpoints.down("xs")]: {
+      width: "100%"
+    }
   }
 }));
 
