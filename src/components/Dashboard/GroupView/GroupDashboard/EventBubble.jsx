@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import dateFormat from "dateformat";
 
@@ -33,9 +34,16 @@ const useStyles = makeStyles({
 const EventBubble = ({ event }) => {
   const [localDate] = useState(new Date(event.date));
   const classes = useStyles();
+  const history = useHistory();
+  const handleClick = id => {
+    history.push(`/dashboard/events/${id}`);
+  };
   return (
     <Card className={classes.cardcontainer}>
-      <CardActionArea className={classes.card}>
+      <CardActionArea
+        className={classes.card}
+        onClick={() => handleClick(event._id)}
+      >
         <Typography variant="h5" className={classes.eventTitle}>
           {event.name}
         </Typography>
