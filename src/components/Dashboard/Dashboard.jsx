@@ -36,8 +36,9 @@ const Dashboard = () => {
       <Route exact path="/dashboard/groups/:groupId">
         <GroupDashboard />
       </Route>
-      <Route exact path="/dashboard/events/:eventId"></Route>
-      <EventView />
+      <Route exact path="/dashboard/events/:eventId">
+        <EventView />
+      </Route>
     </DashboardContainer>
   );
 };
