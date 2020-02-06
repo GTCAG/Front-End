@@ -72,6 +72,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function getGroupData(groupId, setGroup) {
+  axiosAuth()
+    .get(`/groups/${groupId}`)
+    .then(res => {
+      setGroup(res.data);
+    })
+    .catch(err => {
+      console.log("err: ", err.response);
+    });
+}
+
 const GroupDashboard = () => {
   //Hooks
   const params = useParams();
@@ -85,16 +96,8 @@ const GroupDashboard = () => {
 
   //Fetch group from id
   useEffect(() => {
-    axiosAuth()
-      .get(`/groups/${groupId}`)
-      .then(res => {
-        console.log("GroupDashboard response: ", res);
-        setGroup(res.data);
-      })
-      .catch(err => {
-        console.log("err: ", err.response);
-      });
-  }, []);
+    getGroupData(groupId, setGroup);
+  }, [groupId]);
 
   const handleCreateEvent = () => {
     setEvtDialogOpen(true);
@@ -103,6 +106,8 @@ const GroupDashboard = () => {
   const handleCompleteCreate = msg => {
     setSnack({ open: true, message: msg });
     setEvtDialogOpen(false);
+
+    getGroupData(groupId, setGroup);
   };
 
   return (
