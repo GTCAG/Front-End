@@ -9,6 +9,10 @@ import CreateEventDialog from "./CreateEventDialog";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
 const initialGroupState = {
   admins: [],
   events: [],
@@ -73,7 +77,9 @@ const GroupDashboard = () => {
   const params = useParams();
   const [group, setGroup] = useState(initialGroupState);
   const [evtDialogOpen, setEvtDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const groupId = params.groupId;
+  const [snack, setSnack] = useState({ message: "", open: false });
 
   const classes = useStyles();
 
@@ -94,8 +100,35 @@ const GroupDashboard = () => {
     setEvtDialogOpen(true);
   };
 
+  const handleCompleteCreate = msg => {
+    setSnack({ open: true, message: msg });
+    setEvtDialogOpen(false);
+  };
+
   return (
     <div className={classes.root}>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={snack.open}
+        autoHideDuration={6000}
+        onClose={() => setSnack({ ...snack, open: false })}
+        message={snack.message}
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={() => setSnack({ ...snack, open: false })}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
       <div className={classes.toolbar}>
         <div className={classes.titleContainer}>
           <h1 className={classes.groupName}>{group.name}</h1>
@@ -128,6 +161,9 @@ const GroupDashboard = () => {
           groupId={group._id}
           open={evtDialogOpen}
           handleClose={() => setEvtDialogOpen(false)}
+          setLoading={setLoading}
+          loading={loading}
+          cbComplete={handleCompleteCreate}
         />
       </MuiPickersUtilsProvider>
     </div>
