@@ -28,6 +28,12 @@ const useStyles = makeStyles(theme => ({
     color: "#898989",
     paddingLeft: 30,
     borderLeft: "1px solid gray"
+  },
+  cardContainer: {
+    background: "#FFFFFF",
+    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    borderRadius: 15,
+    padding: 20
   }
 }));
 
@@ -49,12 +55,14 @@ const EventView = () => {
   }, [eventId]);
   return (
     <div className={classes.root}>
-      <div className={classes.titleContainer}>
-        <h2 className={classes.eventName}>Event Title</h2>
-        <Typography variant="h6" className={classes.eventDate}>
-          {/* {dateFormat(localDate, "mmmm dS, h:MM TT")} */}
-          Event Date
-        </Typography>
+      <div className={classes.cardContainer}>
+        <div className={classes.titleContainer}>
+          <h2 className={classes.eventName}>Event Title</h2>
+          <Typography variant="h6" className={classes.eventDate}>
+            {/* {dateFormat(localDate, "mmmm dS, h:MM TT")} */}
+            Event Date
+          </Typography>
+        </div>
       </div>
       <div></div>
     </div>
