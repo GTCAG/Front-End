@@ -134,11 +134,12 @@ const IntroBody = () => {
             The Church is the body of Christ, the habitation of God through the Spirit, with divine appointments for the fulfillment of his great commission. God desires for us to be a united and strong church, the foundation of which is the Word of God. Only a strong church can reach the thousands of hearts for Christ. I appreciate and cherish the fact that, in spite of various difficulties and challenges, we remain faithful to the Lord always and everywhere. We have not gone off that road which God has placed us on.
 
   I am happy for each family. And my prayer to God always is that we all reach heaven, where we will be forever with Jesus. May Grace Trinity Church be your spiritual home, your family, where you feel comfortable and safe, growing in the grace of God.
-            <p className="signature">
-              <span className="dash">-</span>	Senior Pastor Alexander Kalinyuk
-            </p>
+
 
           </p>
+          <div className="signature">
+            <span className="dash">-</span>	Senior Pastor Alexander Kalinyuk
+            </div>
         </div>
       </div>
       <div className="para-image img4" />
