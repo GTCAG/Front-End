@@ -129,23 +129,15 @@ const IntroBody = () => {
       <div className="para-image img3" />
       <div className="text-block light">
         <div className="text-content-wrapper max-size">
-          <h2>Join us!</h2>
+          <h2>A word from the pastor</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nibh
-            dolor, congue quis aliquam at, scelerisque ac purus. Morbi a
-            pellentesque augue. Praesent sit amet mattis ante. Nunc quis enim
-            velit. Ut in arcu a massa egestas dignissim. Mauris maximus suscipit
-            massa. Morbi fermentum nibh non ex malesuada, feugiat rhoncus lorem
-            finibus. Nunc fringilla interdum purus, vitae posuere leo lobortis
-            nec. Duis justo diam, eleifend vel lorem eget, semper porttitor
-            augue. Integer mi nunc, mattis auctor ex et, imperdiet posuere ante.
-            Aliquam erat volutpat. Fusce sed libero id est sagittis pretium.
-            Etiam eros orci, tempor sagittis placerat ullamcorper, pretium eu
-            ligula. Interdum et malesuada fames ac ante ipsum primis in
-            faucibus. Ut vestibulum nulla sed condimentum maximus. Aenean
-            dignissim vel est eget tempor. Donec sodales libero nec lacus
-            mattis, ac tempus mi tincidunt. Sed luctus ut est vitae pharetra. Ut
-            at tempor ligula. Nullam pharetra quam ut nunc tempus bibendum.
+            The Church is the body of Christ, the habitation of God through the Spirit, with divine appointments for the fulfillment of his great commission. God desires for us to be a united and strong church, the foundation of which is the Word of God. Only a strong church can reach the thousands of hearts for Christ. I appreciate and cherish the fact that, in spite of various difficulties and challenges, we remain faithful to the Lord always and everywhere. We have not gone off that road which God has placed us on.
+
+  I am happy for each family. And my prayer to God always is that we all reach heaven, where we will be forever with Jesus. May Grace Trinity Church be your spiritual home, your family, where you feel comfortable and safe, growing in the grace of God.
+            <p className="signature">
+              <span className="dash">-</span>	Senior Pastor Alexander Kalinyuk
+            </p>
+
           </p>
         </div>
       </div>

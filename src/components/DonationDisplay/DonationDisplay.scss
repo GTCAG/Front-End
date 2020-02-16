@@ -3,14 +3,13 @@
   align-items: center;
   width: 100%;
   border-top: 1px solid gray;
+  text-decoration: none;
+  color: #333;
   i {
     margin-right: 20px;
     margin-left: 5px;
-    color: rgb(71, 51, 27);
   }
-  i.paypal {
-    color: blue;
-  }
+
   p {
     font-weight: bold;
     font-size: 18px;

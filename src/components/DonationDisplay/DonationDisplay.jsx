@@ -2,6 +2,7 @@ import React from "react";
 import "./DonationDisplay.scss";
 import PaymentRoundedIcon from "@material-ui/icons/PaymentRounded";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -15,10 +16,15 @@ const DonationDisplay = () => {
   return (
     <div className="info-card shadow">
       <h2>Donate</h2>
-      <div className="donation">
+
+
+      <Link to="/donate" className="donation">
         <PaymentRoundedIcon className={classes.icon} />
         <p>Card/Cash</p>
-      </div>
+      </Link>
+
+
+
       <div className="donation">
         <i className="fab fa-paypal fa-2x paypal"></i>
         <p>Paypal</p>
