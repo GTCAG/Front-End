@@ -42,6 +42,7 @@ const Image = styled.img`
   width: 400px;
   height: 652.7px;
   border-radius: 5px;
+  align-self: auto;
 `;
 
 const SideText = styled.p`
