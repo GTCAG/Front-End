@@ -23,7 +23,7 @@ const ImageForm = ({ img, loading, handleSubmit, children }) => {
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-size: cover;
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
 
   
   @media screen and (max-width: 525px) {
@@ -40,10 +40,10 @@ const ImageForm = ({ img, loading, handleSubmit, children }) => {
               <CircularProgress />
             </div>
           ) : (
-              <form onSubmit={handleSubmit} className="login-form ">
-                {children}
-              </form>
-            )}
+            <form onSubmit={handleSubmit} className="login-form ">
+              {children}
+            </form>
+          )}
         </div>
       </div>
     </div>

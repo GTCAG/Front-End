@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded";
 import VideoLibraryRoundedIcon from "@material-ui/icons/VideoLibraryRounded";
 import "./IntroBody.scss";
 import { makeStyles } from "@material-ui/core/styles";
-import { axiosAuth } from "../../axiosWithAuth";
-
 const useStyles = makeStyles(theme => ({
   icon: {
     fontSize: "70px"
@@ -24,39 +22,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const IntroBody = () => {
-  const [live, setLive] = useState(false);
-
-  useEffect(() => {
-    axiosAuth()
-      .get("/livestream")
-      .then(res => {
-        console.log("Livestream res, ", res);
-        setLive(res.data.live);
-      })
-      .catch(err => {
-        console.log("Livestream err", err.response);
-      });
-  }, []);
-
   const classes = useStyles();
   return (
     <div className="body-container">
-      {live ? (
-        <div className="text-block dark">
-          <div className="text-content-wrapper max-size">
-            <h2>We're live right now!</h2>
-            <iframe
-              className={classes.videoContainer}
-              width="560"
-              height="650"
-              src="https://www.youtube.com/embed/live_stream?channel=UCNaKPci4jHkzFyo2hYwlVRQ"
-              frameborder="0"
-              allowfullscreen="true"
-            ></iframe>
-          </div>
-        </div>
-      ) : null}
-
       <div className="text-block light">
         <h2>Can't Attend?</h2>
         <div className="text-block-flex max-size">
@@ -131,15 +99,22 @@ const IntroBody = () => {
         <div className="text-content-wrapper max-size">
           <h2>A word from the pastor</h2>
           <p>
-            The Church is the body of Christ, the habitation of God through the Spirit, with divine appointments for the fulfillment of his great commission. God desires for us to be a united and strong church, the foundation of which is the Word of God. Only a strong church can reach the thousands of hearts for Christ. I appreciate and cherish the fact that, in spite of various difficulties and challenges, we remain faithful to the Lord always and everywhere. We have not gone off that road which God has placed us on.
-
-  I am happy for each family. And my prayer to God always is that we all reach heaven, where we will be forever with Jesus. May Grace Trinity Church be your spiritual home, your family, where you feel comfortable and safe, growing in the grace of God.
-
-
+            The Church is the body of Christ, the habitation of God through the
+            Spirit, with divine appointments for the fulfillment of his great
+            commission. God desires for us to be a united and strong church, the
+            foundation of which is the Word of God. Only a strong church can
+            reach the thousands of hearts for Christ. I appreciate and cherish
+            the fact that, in spite of various difficulties and challenges, we
+            remain faithful to the Lord always and everywhere. We have not gone
+            off that road which God has placed us on. I am happy for each
+            family. And my prayer to God always is that we all reach heaven,
+            where we will be forever with Jesus. May Grace Trinity Church be
+            your spiritual home, your family, where you feel comfortable and
+            safe, growing in the grace of God.
           </p>
           <div className="signature">
-            <span className="dash">-</span>	Senior Pastor Alexander Kalinyuk
-            </div>
+            <span className="dash">-</span> Senior Pastor Alexander Kalinyuk
+          </div>
         </div>
       </div>
       <div className="para-image img4" />
