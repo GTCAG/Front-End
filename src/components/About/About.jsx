@@ -40,9 +40,16 @@ const FlexContainer = styled.div`
 
 const Image = styled.img`
   width: 400px;
-  height: 652.7px;
+  min-width: 400px;
+  // height: 652.7px;
+  max-height: 652.8px;
   border-radius: 5px;
   align-self: auto;
+
+  @media (max-width: 580px) {
+    width: 300px;
+    min-width: 300px;
+  }
 `;
 
 const SideText = styled.p`
@@ -56,6 +63,11 @@ const SideText = styled.p`
 const SideContainer = styled.div`
   padding-right: 10px;
   margin-left: 40px;
+  width: 80%;
+
+  @media (max-width: 850px) {
+    margin-left: 0px;
+  }
 `;
 
 const BioTitle = styled.h2`
