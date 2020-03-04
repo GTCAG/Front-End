@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import dateFormat from "dateformat";
+import { useSelector } from "react-redux";
 
 import { axiosAuth } from "../../../axiosWithAuth";
 import EventSongList from "./EventSongList";
@@ -55,6 +56,8 @@ const EventView = () => {
     date: Date.now(),
     name: ""
   });
+  const [admin, setAdmin] = useState(false);
+  const userId = useSelector(state => state.userId);
   const classes = useStyles();
   const { eventId } = useParams();
 
@@ -65,11 +68,16 @@ const EventView = () => {
       .then(res => {
         console.log("Event view res:", res);
         setEvent(res.data);
+        return axiosAuth().get(`/groups/${res.data.associatedGroup}`);
+      })
+      .then(ares => {
+        const isAdmin = ares.data.admins.some(admin => admin._id == userId);
+        setAdmin(isAdmin);
       })
       .catch(err => {
         console.log("Err: ", err);
       });
-  }, [eventId]);
+  }, [eventId, userId]);
   return (
     <div className={classes.root}>
       <div className={classes.cardContainer}>
@@ -80,7 +88,7 @@ const EventView = () => {
           </Typography>
         </div>
         <div className={classes.songsContainer}>
-          <EventSongList admin={false} />
+          <EventSongList admin={admin} />
         </div>
       </div>
     </div>
