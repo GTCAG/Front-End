@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import dateFormat from "dateformat";
 import { useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
 
 import { axiosAuth } from "../../../axiosWithAuth";
 import EventSongList from "./EventSongList";
@@ -48,6 +49,10 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     flexDirection: "column",
     marginTop: 40
+  },
+  addButton: {
+    marginBottom: 25,
+    width: "80%"
   }
 }));
 
@@ -88,6 +93,8 @@ const EventView = () => {
           </Typography>
         </div>
         <div className={classes.songsContainer}>
+          <Button className={classes.addButton}>Add Song</Button>
+
           <EventSongList admin={admin} />
         </div>
       </div>

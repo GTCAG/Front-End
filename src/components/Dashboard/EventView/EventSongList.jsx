@@ -5,6 +5,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import ListItemText from "@material-ui/core/ListItemText";
+import AddIcon from "@material-ui/icons/Add";
+import Toolbar from "@material-ui/core/Toolbar";
+
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import Card from "@material-ui/core/Card";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -39,6 +42,9 @@ const useStyles = makeStyles(theme => ({
   },
   nextIcon: {
     marginLeft: 10
+  },
+  toolbar: {
+    justifyContent: "space-between"
   }
 }));
 
@@ -48,9 +54,22 @@ const EventSongList = ({ songs, admin }) => {
     <div className={classes.root}>
       <Card className={classes.card}>
         <AppBar className={classes.barRoot} position="static">
-          <Typography variant="h6" className={classes.title}>
-            Songs
-          </Typography>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6" className={classes.title}>
+              Songs
+            </Typography>
+            <Tooltip title="Add Song">
+              <IconButton
+                aria-label="add song"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                // onClick={handleMenu}
+                color="inherit"
+              >
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          </Toolbar>
         </AppBar>
         <List className={classes.list}>
           <ListItem>
