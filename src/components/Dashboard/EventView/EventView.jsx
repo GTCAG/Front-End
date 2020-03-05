@@ -93,8 +93,6 @@ const EventView = () => {
           </Typography>
         </div>
         <div className={classes.songsContainer}>
-          <Button className={classes.addButton}>Add Song</Button>
-
           <EventSongList admin={admin} />
         </div>
       </div>

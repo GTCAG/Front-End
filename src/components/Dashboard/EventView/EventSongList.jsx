@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import List from "@material-ui/core/List";
+import EventAddSongDialog from "./EventAddSongDialog";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -49,9 +50,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EventSongList = ({ songs, admin }) => {
+  const [addDialogOpen, setAddDialogOpen] = useState(true);
   const classes = useStyles();
+
+  const handleAddSong = () => {
+    setAddDialogOpen(true);
+  };
+
   return (
     <div className={classes.root}>
+      <EventAddSongDialog
+        open={addDialogOpen}
+        handleClose={() => setAddDialogOpen(false)}
+      />
       <Card className={classes.card}>
         <AppBar className={classes.barRoot} position="static">
           <Toolbar className={classes.toolbar}>
@@ -63,7 +74,7 @@ const EventSongList = ({ songs, admin }) => {
                 aria-label="add song"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                // onClick={handleMenu}
+                onClick={handleAddSong}
                 color="inherit"
               >
                 <AddIcon />
