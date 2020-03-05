@@ -6,6 +6,11 @@ import Chip from "@material-ui/core/Chip";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import { makeStyles } from "@material-ui/core";
+import validateUrl from "../../../util/validateUrl";
+import AttachmentIcon from "@material-ui/icons/Attachment";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   formContainer: {
@@ -40,6 +45,9 @@ const useStyles = makeStyles({
   chip: {
     marginRight: 5,
     marginBottom: 5
+  },
+  popover: {
+    padding: 20
   }
 });
 
@@ -50,6 +58,7 @@ const CreateSongForm = () => {
     bpm: 0,
     referenceUrl: ""
   });
+  const [urlPopover, setUrlPopover] = useState(false);
   const [urlList, setUrlList] = useState([]);
 
   const handleDelete = chipUrl => () => {
@@ -62,8 +71,13 @@ const CreateSongForm = () => {
   };
 
   const handleAddRefUrl = () => {
-    setUrlList([...urlList, formData.referenceUrl]);
-    setFormData({ ...formData, referenceUrl: "" });
+    if (validateUrl(formData.referenceUrl)) {
+      setUrlPopover(false);
+      setUrlList([...urlList, formData.referenceUrl]);
+      setFormData({ ...formData, referenceUrl: "" });
+    } else {
+      setUrlPopover(true);
+    }
   };
 
   return (
@@ -115,22 +129,34 @@ const CreateSongForm = () => {
           <Chip
             className={classes.chip}
             label={url}
+            icon={<AttachFileIcon />}
             onDelete={handleDelete(url)}
             color="primary"
             key={index}
+            variant="outlined"
           />
         ))}
-        {/* <Chip
-          label="Deletable primary"
-          onDelete={handleDelete}
-          color="primary"
-          variant="outlined"
-        /> */}
       </div>
-
       <Button color="primary" variant="contained">
         Create
       </Button>
+
+      <Popover
+        className={classes.popover}
+        open={urlPopover}
+        anchorEl={() => document.querySelector("#referenceUrl")}
+        onClose={() => setUrlPopover(false)}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center"
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
+      >
+        <Typography className={classes.popover}>Not a valid URL</Typography>
+      </Popover>
     </form>
   );
 };
