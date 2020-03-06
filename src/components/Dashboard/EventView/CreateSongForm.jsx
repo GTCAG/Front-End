@@ -7,16 +7,19 @@ import Chip from "@material-ui/core/Chip";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import { makeStyles } from "@material-ui/core";
 import validateUrl from "../../../util/validateUrl";
-import AttachmentIcon from "@material-ui/icons/Attachment";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import InfoSnack from "../../FeedbackComponents/InfoSnack";
+import { axiosAuth } from "../../../axiosWithAuth";
 
 const useStyles = makeStyles({
   formContainer: {
     display: "flex",
     flexDirection: "column",
-    width: 400
+    width: "100%",
+    maxWidth: 400
   },
   input: {
     marginBottom: 15
@@ -48,6 +51,14 @@ const useStyles = makeStyles({
   },
   popover: {
     padding: 20
+  },
+  progressContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: 400,
+    height: 265
   }
 });
 
@@ -58,8 +69,11 @@ const CreateSongForm = () => {
     bpm: 0,
     referenceUrl: ""
   });
+  const [snack, setSnack] = useState({ open: false, message: "Test" });
   const [urlPopover, setUrlPopover] = useState(false);
   const [urlList, setUrlList] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = chipUrl => () => {
     const newList = urlList.filter(url => url !== chipUrl);
@@ -80,8 +94,45 @@ const CreateSongForm = () => {
     }
   };
 
+  const handleCreate = () => {
+    if (formData.name.length <= 0) {
+      alert("Name of the song is required");
+      return;
+    }
+
+    setLoading(true);
+    const body = {
+      title: formData.name,
+      bpm: formData.bpm,
+      referenceUrls: urlList
+    };
+    axiosAuth()
+      .post("/songs/", body)
+      .then(res => {
+        console.log("Success response: ", res);
+        setLoading(false);
+        setSnack({ open: true, message: "Successfully created song!" });
+      })
+      .catch(err => {
+        setLoading(false);
+        setSnack({ open: true, message: err.response.data.error });
+      });
+  };
+
+  if (loading)
+    return (
+      <div className={classes.progressContainer}>
+        <CircularProgress />
+      </div>
+    );
+
   return (
     <form className={classes.formContainer} noValidate autoComplete="off">
+      <InfoSnack
+        open={snack.open}
+        message={snack.message}
+        onClose={() => setSnack({ ...snack, open: false })}
+      />
       <TextField
         className={classes.input}
         id="name"
@@ -137,7 +188,7 @@ const CreateSongForm = () => {
           />
         ))}
       </div>
-      <Button color="primary" variant="contained">
+      <Button onClick={handleCreate} color="primary" variant="contained">
         Create
       </Button>
 

@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   contentContainer: {
-    padding: 25,
+    padding: 20,
     width: "100%",
     boxSizing: "border-box"
   },
