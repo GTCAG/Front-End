@@ -9,27 +9,27 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AddIcon from "@material-ui/icons/Add";
 import Toolbar from "@material-ui/core/Toolbar";
 import ClearIcon from "@material-ui/icons/Clear";
-
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import { axiosAuth } from "../../../axiosWithAuth";
 import Card from "@material-ui/core/Card";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
-import InfoSnack from "../../FeedbackComponents/InfoSnack";
 
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     boxSizing: "border-box",
     width: "80%"
   },
   songTitle: {
     color: "#555"
+  },
+  list: {
+    minHeight: 100
   },
   card: {
     marginBottom: 20,
@@ -48,33 +48,44 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: {
     justifyContent: "space-between"
+  },
+  clearIcon: {
+    marginRight: 13
   }
 }));
 
-const EventSongList = ({ songs, admin }) => {
+const EventSongList = ({ songs, admin, onSuccess, eventId, setSongs }) => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [snack, setSnack] = useState({ open: false, message: "" });
   const classes = useStyles();
 
   const handleAddSong = () => {
     setAddDialogOpen(true);
   };
 
-  const handleSuccess = () => {
-    setSnack({ open: true, message: "Added Song" });
+  const handleRemoveSong = songId => {
+    const filteredSongs = songs.filter(song => song._id != songId);
+    setSongs(filteredSongs);
+    const body = { songId };
+    console.log("Delete body: ", body);
+    axiosAuth()
+      .delete(`/events/${eventId}/song`, { data: body })
+      .then(res => {
+        console.log("Remove res: ", res);
+      })
+      .catch(err => {
+        console.log("There was an error removing a song", err.response);
+      });
   };
 
+  const eventOnSuccess = (songId, setLoading) => {
+    onSuccess(songId, setLoading, setAddDialogOpen);
+  };
   return (
     <div className={classes.root}>
-      <InfoSnack
-        message={snack.message}
-        open={snack.open}
-        onClose={() => setSnack({ ...snack, open: false })}
-      />
       <EventAddSongDialog
         open={addDialogOpen}
         handleClose={() => setAddDialogOpen(false)}
-        onSuccess={handleSuccess}
+        onSuccess={eventOnSuccess}
       />
       <Card className={classes.card}>
         <AppBar className={classes.barRoot} position="static">
@@ -96,25 +107,31 @@ const EventSongList = ({ songs, admin }) => {
           </Toolbar>
         </AppBar>
         <List className={classes.list}>
-          <ListItem>
-            <ListItemIcon>
-              <MusicNoteIcon />
-            </ListItemIcon>
-            <ListItemText
-              className={classes.songTitle}
-              primary="Example Song"
-            />
-
-            <ListItemSecondaryAction>
-              {admin ? (
-                <Tooltip title="Remove">
-                  <IconButton edge="end" aria-label="delete">
-                    <ClearIcon />
-                  </IconButton>
-                </Tooltip>
-              ) : null}
-            </ListItemSecondaryAction>
-          </ListItem>
+          {songs.map((song, index) => (
+            <ListItem key={index}>
+              <ListItemIcon>
+                <MusicNoteIcon />
+              </ListItemIcon>
+              <ListItemText
+                className={classes.songTitle}
+                primary={song.title}
+              />
+              <ListItemSecondaryAction>
+                {admin ? (
+                  <Tooltip title="Remove">
+                    <IconButton
+                      className={classes.clearIcon}
+                      edge="end"
+                      onClick={() => handleRemoveSong(song._id)}
+                      aria-label="remove"
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  </Tooltip>
+                ) : null}
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
         </List>
       </Card>
     </div>

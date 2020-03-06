@@ -12,6 +12,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import BackdropWait from "../../../FeedbackComponents/BackdropWait";
 
 const initialGroupState = {
   admins: [],
@@ -72,11 +73,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function getGroupData(groupId, setGroup) {
+function getGroupData(groupId, setGroup, setWait) {
+  setWait(true);
   axiosAuth()
     .get(`/groups/${groupId}`)
     .then(res => {
       setGroup(res.data);
+      setWait(false);
     })
     .catch(err => {
       console.log("err: ", err.response);
@@ -87,6 +90,7 @@ const GroupDashboard = () => {
   //Hooks
   const params = useParams();
   const [group, setGroup] = useState(initialGroupState);
+  const [apiWait, setApiWait] = useState(false);
   const [evtDialogOpen, setEvtDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const groupId = params.groupId;
@@ -96,7 +100,7 @@ const GroupDashboard = () => {
 
   //Fetch group from id
   useEffect(() => {
-    getGroupData(groupId, setGroup);
+    getGroupData(groupId, setGroup, setApiWait);
   }, [groupId]);
 
   const handleCreateEvent = () => {
@@ -107,11 +111,12 @@ const GroupDashboard = () => {
     setSnack({ open: true, message: msg });
     setEvtDialogOpen(false);
 
-    getGroupData(groupId, setGroup);
+    getGroupData(groupId, setGroup, setApiWait);
   };
 
   return (
     <div className={classes.root}>
+      <BackdropWait open={apiWait} />
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",

@@ -111,11 +111,8 @@ const CreateSongForm = ({ onSuccess }) => {
     axiosAuth()
       .post("/songs/", body)
       .then(res => {
-        console.log("Success response: ", res);
-        setLoading(false);
         setFormData(initialFormData);
-        setSnack({ open: true, message: "Successfully created song!" });
-        onSuccess();
+        onSuccess(res.data._id, setLoading);
       })
       .catch(err => {
         setLoading(false);
