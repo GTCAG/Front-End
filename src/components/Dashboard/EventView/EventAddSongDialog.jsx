@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 });
 
 const EventAddSongDialog = ({ open, handleClose, onSuccess }) => {
-  const [creatingSong, setCreatingSong] = useState(true);
+  const [creatingSong, setCreatingSong] = useState(false);
   const [addingExisting, setAddingExisting] = useState(false);
   const classes = useStyles();
 

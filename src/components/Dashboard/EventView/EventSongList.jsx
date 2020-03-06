@@ -14,7 +14,7 @@ import Card from "@material-ui/core/Card";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import IconButton from "@material-ui/core/IconButton";
-
+import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 
@@ -56,6 +56,7 @@ const useStyles = makeStyles(() => ({
 
 const EventSongList = ({ songs, admin, onSuccess, eventId, setSongs }) => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const history = useHistory();
   const classes = useStyles();
 
   const handleAddSong = () => {
@@ -66,12 +67,8 @@ const EventSongList = ({ songs, admin, onSuccess, eventId, setSongs }) => {
     const filteredSongs = songs.filter(song => song._id != songId);
     setSongs(filteredSongs);
     const body = { songId };
-    console.log("Delete body: ", body);
     axiosAuth()
       .delete(`/events/${eventId}/song`, { data: body })
-      .then(res => {
-        console.log("Remove res: ", res);
-      })
       .catch(err => {
         console.log("There was an error removing a song", err.response);
       });
@@ -108,7 +105,11 @@ const EventSongList = ({ songs, admin, onSuccess, eventId, setSongs }) => {
         </AppBar>
         <List className={classes.list}>
           {songs.map((song, index) => (
-            <ListItem key={index}>
+            <ListItem
+              button
+              onClick={() => history.push(`/dashboard/songs/${song._id}`)}
+              key={index}
+            >
               <ListItemIcon>
                 <MusicNoteIcon />
               </ListItemIcon>

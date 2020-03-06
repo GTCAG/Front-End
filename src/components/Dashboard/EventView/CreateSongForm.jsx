@@ -38,7 +38,8 @@ const useStyles = makeStyles({
   doubleInputButton: {
     width: 50,
     height: 50,
-    color: "#606060"
+    color: "#606060",
+    marginLeft: 10
   },
   referenceChipsContainer: {
     display: "flex",
