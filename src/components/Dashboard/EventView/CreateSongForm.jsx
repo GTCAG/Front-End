@@ -62,13 +62,15 @@ const useStyles = makeStyles({
   }
 });
 
-const CreateSongForm = () => {
+const initialFormData = {
+  name: "",
+  bpm: 0,
+  referenceUrl: ""
+};
+
+const CreateSongForm = ({ onSuccess }) => {
   const classes = useStyles();
-  const [formData, setFormData] = useState({
-    name: "",
-    bpm: 0,
-    referenceUrl: ""
-  });
+  const [formData, setFormData] = useState(initialFormData);
   const [snack, setSnack] = useState({ open: false, message: "Test" });
   const [urlPopover, setUrlPopover] = useState(false);
   const [urlList, setUrlList] = useState([]);
@@ -111,7 +113,9 @@ const CreateSongForm = () => {
       .then(res => {
         console.log("Success response: ", res);
         setLoading(false);
+        setFormData(initialFormData);
         setSnack({ open: true, message: "Successfully created song!" });
+        onSuccess();
       })
       .catch(err => {
         setLoading(false);

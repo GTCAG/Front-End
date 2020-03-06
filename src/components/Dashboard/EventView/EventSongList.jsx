@@ -8,6 +8,7 @@ import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import ListItemText from "@material-ui/core/ListItemText";
 import AddIcon from "@material-ui/icons/Add";
 import Toolbar from "@material-ui/core/Toolbar";
+import ClearIcon from "@material-ui/icons/Clear";
 
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import Card from "@material-ui/core/Card";
@@ -18,6 +19,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
+import InfoSnack from "../../FeedbackComponents/InfoSnack";
 
 import { makeStyles } from "@material-ui/core";
 
@@ -50,18 +52,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EventSongList = ({ songs, admin }) => {
-  const [addDialogOpen, setAddDialogOpen] = useState(true);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [snack, setSnack] = useState({ open: false, message: "" });
   const classes = useStyles();
 
   const handleAddSong = () => {
     setAddDialogOpen(true);
   };
 
+  const handleSuccess = () => {
+    setSnack({ open: true, message: "Added Song" });
+  };
+
   return (
     <div className={classes.root}>
+      <InfoSnack
+        message={snack.message}
+        open={snack.open}
+        onClose={() => setSnack({ ...snack, open: false })}
+      />
       <EventAddSongDialog
         open={addDialogOpen}
         handleClose={() => setAddDialogOpen(false)}
+        onSuccess={handleSuccess}
       />
       <Card className={classes.card}>
         <AppBar className={classes.barRoot} position="static">
@@ -96,20 +109,10 @@ const EventSongList = ({ songs, admin }) => {
               {admin ? (
                 <Tooltip title="Remove">
                   <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
+                    <ClearIcon />
                   </IconButton>
                 </Tooltip>
               ) : null}
-
-              <Tooltip title="View">
-                <IconButton
-                  className={classes.nextIcon}
-                  edge="end"
-                  aria-label="next"
-                >
-                  <NavigateNextIcon />
-                </IconButton>
-              </Tooltip>
             </ListItemSecondaryAction>
           </ListItem>
         </List>
