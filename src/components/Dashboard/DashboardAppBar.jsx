@@ -68,7 +68,7 @@ const GroupAppBar = ({ title }) => {
         setCurrentTitle("Dashboard");
         break;
     }
-  }, []);
+  }, [location.pathname]);
 
   const handleMenuClose = () => {
     setMenuOpen(false);

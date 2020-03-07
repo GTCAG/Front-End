@@ -1,18 +1,6 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { CircularProgress } from "@material-ui/core";
-
-const widthResize = keyframes`
-0% {
-  transform: translateY(15%);
-  opacity: 0.1;
-}
-
-100% {
-  transform: translateY(0);
-  opacity: 1;
-}
-`;
 
 const ImageForm = ({ img, loading, handleSubmit, children }) => {
   const ImageContainer = styled.div`
