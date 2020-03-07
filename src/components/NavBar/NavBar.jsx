@@ -62,6 +62,8 @@ const NavBar = () => {
             <Link to="/">Home</Link>
             <Link to="/donate">Donate</Link>
             <Link to="/about">Pastor</Link>
+
+            <Link to="/contact">Contact</Link>
             <Link to="/login">Library</Link>
           </div>
           <button
@@ -81,6 +83,7 @@ const NavBar = () => {
           <Link to="/">Home</Link>
           <Link to="/donate">Donate</Link>
           <Link to="/about">Pastor</Link>
+          <Link to="/contact">Contact</Link>
           <Link to="/login">Library</Link>
         </MenuLinks>
       </div>
