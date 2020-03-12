@@ -82,6 +82,8 @@ const EventSongList = ({ songs, admin, onSuccess, eventId, setSongs }) => {
       <EventAddSongDialog
         open={addDialogOpen}
         handleClose={() => setAddDialogOpen(false)}
+        setSongs={setSongs}
+        songs={songs}
         onSuccess={eventOnSuccess}
       />
       <Card className={classes.card}>

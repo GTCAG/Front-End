@@ -118,7 +118,7 @@ const EventView = () => {
       .then(res => {
         setDialogOpen(false);
         setLoading(false);
-        setSnack({ open: true, message: "Added Song" });
+        setSnack({ open: true, message: "Added Song(s)" });
         setEvent({ ...event, songs: res.data.songs });
       })
       .catch(err => {

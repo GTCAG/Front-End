@@ -81,6 +81,7 @@ const useStyles = makeStyles(theme => ({
 
 const SongViewPage = () => {
   const { songId } = useParams();
+  const [edit, setEdit] = useState(false);
   const [apiWait, setApiWait] = useState(false);
   const [song, setSong] = useState({
     title: "",

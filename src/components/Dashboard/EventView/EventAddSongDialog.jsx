@@ -23,7 +23,13 @@ const useStyles = makeStyles({
   }
 });
 
-const EventAddSongDialog = ({ open, handleClose, onSuccess }) => {
+const EventAddSongDialog = ({
+  open,
+  handleClose,
+  onSuccess,
+  setSongs,
+  songs
+}) => {
   const [creatingSong, setCreatingSong] = useState(false);
   const [addingExisting, setAddingExisting] = useState(false);
   const classes = useStyles();
@@ -61,7 +67,11 @@ const EventAddSongDialog = ({ open, handleClose, onSuccess }) => {
         {creatingSong ? (
           <CreateSongForm handleClose={handleOurClose} onSuccess={onSuccess} />
         ) : addingExisting ? (
-          <AddExistingSongForm onSuccess={onSuccess} />
+          <AddExistingSongForm
+            songs={songs}
+            setSongs={setSongs}
+            onSuccess={onSuccess}
+          />
         ) : (
           <div>
             <Button
