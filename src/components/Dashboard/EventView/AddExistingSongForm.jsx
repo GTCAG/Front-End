@@ -90,6 +90,7 @@ const AddExistingSongForm = ({ setSongs, songs }) => {
     message: ""
   });
   const [searchValue, setSearchValue] = useState("");
+  const [filteredList, setFilteredList] = useState([]);
   const [songList, setSongList] = useState([]);
 
   useEffect(() => {
@@ -98,6 +99,7 @@ const AddExistingSongForm = ({ setSongs, songs }) => {
       .get("/songs")
       .then(res => {
         setSongList(res.data);
+        setFilteredList(res.data);
         setApiWait(false);
       })
       .catch(err => {
@@ -105,6 +107,13 @@ const AddExistingSongForm = ({ setSongs, songs }) => {
         setApiWait(false);
       });
   }, []);
+
+  useEffect(() => {
+    const filtered = songList.filter(song =>
+      song.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilteredList(filtered);
+  }, [searchValue]);
 
   const handleChange = e => {
     setSearchValue(e.target.value);
@@ -164,7 +173,7 @@ const AddExistingSongForm = ({ setSongs, songs }) => {
         </div>
 
         <List className={classes.list} dense={false}>
-          {songList.map((song, index) => (
+          {filteredList.map((song, index) => (
             <ListItem key={index}>
               <ListItemText>{song.title}</ListItemText>
               <ListItemSecondaryAction>
