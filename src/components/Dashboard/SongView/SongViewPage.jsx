@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
-import { makeStyles, IconButton, Tooltip } from "@material-ui/core";
+import { makeStyles, IconButton, Tooltip, TextField } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
+import CheckIcon from "@material-ui/icons/Check";
+import AddUrlDialog from "./AddUrlDialog";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 import { axiosAuth } from "../../../axiosWithAuth";
@@ -76,12 +79,36 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     top: 20,
     right: 20
+  },
+  confirmButton: {
+    position: "absolute",
+    top: 20,
+    right: 20
+  },
+  bpmField: {
+    marginTop: 10
+  },
+  centeredFlex: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  addButton: {
+    marginLeft: 10
   }
 }));
 
 const SongViewPage = () => {
   const { songId } = useParams();
   const [edit, setEdit] = useState(false);
+  const [urlDialog, setUrlDialog] = useState(false);
+  const [attachmentDialog, setAttachmentDialog] = useState(false);
+  const [songEditValues, setSongEditValues] = useState({
+    title: "",
+    bpm: 0,
+    url: "",
+    attachment: ""
+  });
   const [apiWait, setApiWait] = useState(false);
   const [song, setSong] = useState({
     title: "",
@@ -97,6 +124,11 @@ const SongViewPage = () => {
       .then(res => {
         console.log("Song view res", res);
         setSong(res.data);
+        setSongEditValues({
+          ...songEditValues,
+          title: res.data.title,
+          bpm: res.data.bpm
+        });
         setApiWait(false);
       })
       .catch(err => {
@@ -105,25 +137,78 @@ const SongViewPage = () => {
       });
   }, []);
 
+  const handleConfirmChanges = () => {
+    setEdit(false);
+  };
+
+  const handleChipDelete = () => {};
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <BackdropWait open={apiWait} />
+      <AddUrlDialog open={urlDialog} onClose={() => setUrlDialog(false)} />
       <div className={classes.cardContainer}>
-        <Tooltip title="Edit">
-          <IconButton className={classes.editButton}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
+        {edit ? (
+          <Tooltip title="Confirm Changes">
+            <IconButton
+              onClick={handleConfirmChanges}
+              className={classes.confirmButton}
+            >
+              <CheckIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Edit">
+            <IconButton
+              onClick={() => setEdit(true)}
+              className={classes.editButton}
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        )}
 
-        <h2 className={classes.songName}>{song.title}</h2>
+        {edit ? (
+          <TextField
+            type="text"
+            label="Title"
+            variant="outlined"
+            name="title"
+            placeholder="Song Title"
+            value={songEditValues.title}
+          />
+        ) : (
+          <h2 className={classes.songName}>{song.title}</h2>
+        )}
 
         <div className={classes.bpmContainer}>
           {/* Metronome Icon */}
-          <h3 className={classes.bpm}>BPM: {song.bpm}</h3>
+          {edit ? (
+            <TextField
+              type="number"
+              name="bpm"
+              label="BPM"
+              className={classes.bpmField}
+              value={songEditValues.bpm}
+            />
+          ) : (
+            <h3 className={classes.bpm}>BPM: {song.bpm}</h3>
+          )}
         </div>
-
-        <h3 className={classes.subTitle}>URLs</h3>
+        <div className={classes.centeredFlex}>
+          <h3 className={classes.subTitle}>URLs</h3>
+          {edit && (
+            <Tooltip title="Add">
+              <IconButton
+                onClick={() => setUrlDialog(true)}
+                className={classes.addButton}
+              >
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </div>
         <div className={classes.referenceContainer}>
           {song.referenceUrls.length === 0 && (
             <p className={classes.noResultsText}>There are no URLs yet</p>
@@ -132,17 +217,28 @@ const SongViewPage = () => {
             <Chip
               clickable
               className={classes.chip}
-              label={url}
+              label={shortenUrl(url)}
               component="a"
               href={url}
               icon={<AttachFileIcon />}
               color="primary"
               key={index}
               variant="outlined"
+              onDelete={edit ? handleChipDelete : null}
             />
           ))}
         </div>
-        <h2 className={classes.subTitle}>Attachments</h2>
+        <div className={classes.centeredFlex}>
+          <h2 className={classes.subTitle}>Attachments</h2>
+
+          {edit && (
+            <Tooltip title="Add">
+              <IconButton className={classes.addButton}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </div>
         <div className={classes.attachmentsContainer}>
           {song.attachmentUrls.length === 0 && (
             <p className={classes.noResultsText}>
@@ -154,5 +250,14 @@ const SongViewPage = () => {
     </div>
   );
 };
+
+function shortenUrl(url) {
+  if (url.length > 20) {
+    url = url.slice(0, 20);
+    url = url + "...";
+  }
+
+  return url;
+}
 
 export default SongViewPage;
