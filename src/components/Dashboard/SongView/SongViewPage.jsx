@@ -137,17 +137,38 @@ const SongViewPage = () => {
       });
   }, []);
 
+  const handleEditChanges = e => {
+    setSongEditValues({ ...songEditValues, [e.target.name]: e.target.value });
+  };
+
   const handleConfirmChanges = () => {
+    axiosAuth()
+      .put(`/songs/${songId}`, songEditValues)
+      .then(res => {
+        console.log("Edited song response: ", res);
+      })
+      .catch(err => {
+        console.log("Error: ", err.response);
+      });
+    setSong({ ...song, title: songEditValues.title, bpm: songEditValues.bpm });
     setEdit(false);
   };
 
-  const handleChipDelete = () => {};
+  const handleChipDelete = url => {
+    axiosAuth().delete(`/songs/${songId}/removeurl`, { data: { url } });
+    const filteredArr = song.referenceUrls.filter(refUrl => refUrl != url);
+    setSong({ ...song, referenceUrls: filteredArr });
+  };
 
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <BackdropWait open={apiWait} />
-      <AddUrlDialog open={urlDialog} onClose={() => setUrlDialog(false)} />
+      <AddUrlDialog
+        songId={songId}
+        open={urlDialog}
+        onClose={() => setUrlDialog(false)}
+      />
       <div className={classes.cardContainer}>
         {edit ? (
           <Tooltip title="Confirm Changes">
@@ -177,6 +198,7 @@ const SongViewPage = () => {
             name="title"
             placeholder="Song Title"
             value={songEditValues.title}
+            onChange={handleEditChanges}
           />
         ) : (
           <h2 className={classes.songName}>{song.title}</h2>
@@ -191,6 +213,7 @@ const SongViewPage = () => {
               label="BPM"
               className={classes.bpmField}
               value={songEditValues.bpm}
+              onChange={handleEditChanges}
             />
           ) : (
             <h3 className={classes.bpm}>BPM: {song.bpm}</h3>
@@ -224,7 +247,7 @@ const SongViewPage = () => {
               color="primary"
               key={index}
               variant="outlined"
-              onDelete={edit ? handleChipDelete : null}
+              onDelete={edit ? () => handleChipDelete(url) : null}
             />
           ))}
         </div>
