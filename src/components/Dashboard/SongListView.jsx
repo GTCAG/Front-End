@@ -63,6 +63,8 @@ function generateList(songList, dense) {
 const SongListView = () => {
   const classes = useStyles();
   const [songList, setSongList] = useState([]);
+  const [filteredSongList, setFilteredSongList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const dense = false;
 
@@ -71,8 +73,8 @@ const SongListView = () => {
     axiosAuth()
       .get("/songs")
       .then((res) => {
-        console.log("Response from song list: ", res);
         setSongList(res.data);
+        setFilteredSongList(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -83,6 +85,19 @@ const SongListView = () => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    // If no search term, set to full song list.
+    if (searchTerm.length === 0) {
+      setFilteredSongList(songList);
+    } else {
+      // Filter the list by search term.
+      const filtered = songList.filter((song) =>
+        song.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredSongList(filtered);
+    }
+  }, [searchTerm]);
 
   return (
     <Paper className={classes.container}>
@@ -96,6 +111,8 @@ const SongListView = () => {
         label="Search"
         placeholder="Search Song Library"
         variant="outlined"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
 
       {loading ? (
@@ -103,7 +120,9 @@ const SongListView = () => {
           <CircularProgress />
         </div>
       ) : (
-        <div className={classes.demo}>{generateList(songList, dense)}</div>
+        <div className={classes.demo}>
+          {generateList(filteredSongList, dense)}
+        </div>
       )}
     </Paper>
   );
