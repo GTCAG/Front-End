@@ -3,7 +3,6 @@ import styled from "styled-components";
 import SongListView from "./SongListView";
 
 const Container = styled.div`
-  background-color: #394359;
   height: 100%;
   width: 100%;
   display: flex;

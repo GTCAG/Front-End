@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { axiosAuth } from "../../axiosWithAuth";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -10,54 +11,78 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import { CircularProgress } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     padding: "35px",
-    width: "80%"
+    width: "80%",
+    minHeight: "500px",
   },
   root: {
     flexGrow: 1,
-    maxWidth: 752
+    maxWidth: 752,
   },
   demo: {
-    backgroundColor: "#eee"
+    backgroundColor: "#eee",
+    maxHeight: "450px",
+    overflowY: "auto",
   },
   title: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   searchBar: {
-    margin: "20px 0px "
-  }
+    margin: "20px 0px ",
+  },
+  loadingContainer: {
+    height: "350px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 
-const initialSongList = [
-  {
-    name: "Test"
-  },
-  {
-    name: "Test2"
-  },
-  {
-    name: "Test"
-  },
-  {
-    name: "Test"
-  },
-  {
-    name: "Test5"
-  },
-  {
-    name: "Test"
-  },
-  {
-    name: "Test"
-  }
-];
+function generateList(songList, dense) {
+  return (
+    <List dense={dense}>
+      {songList.map((song, index) => (
+        <ListItem key={index} button onClick={() => console.log("Test")}>
+          <ListItemAvatar>
+            <ListItemIcon>
+              <MusicNoteIcon />
+            </ListItemIcon>
+          </ListItemAvatar>
+          <ListItemText primary={song.title} />
+          <ArrowForwardIcon />
+        </ListItem>
+      ))}
+    </List>
+  );
+}
+
 const SongListView = () => {
   const classes = useStyles();
-  const [songList, setSongList] = useState(initialSongList);
+  const [songList, setSongList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dense = false;
+
+  useEffect(() => {
+    setLoading(true);
+    axiosAuth()
+      .get("/songs")
+      .then((res) => {
+        console.log("Response from song list: ", res);
+        setSongList(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(
+          "Error getting list of songs for song list view component: ",
+          err
+        );
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Paper className={classes.container}>
@@ -73,21 +98,13 @@ const SongListView = () => {
         variant="outlined"
       />
 
-      <div className={classes.demo}>
-        <List dense={dense}>
-          {songList.map((song, index) => (
-            <ListItem key={index} button onClick={() => console.log("Test")}>
-              <ListItemAvatar>
-                <ListItemIcon>
-                  <MusicNoteIcon />
-                </ListItemIcon>
-              </ListItemAvatar>
-              <ListItemText primary={song.name} />
-              <ArrowForwardIcon />
-            </ListItem>
-          ))}
-        </List>
-      </div>
+      {loading ? (
+        <div className={classes.loadingContainer}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <div className={classes.demo}>{generateList(songList, dense)}</div>
+      )}
     </Paper>
   );
 };
