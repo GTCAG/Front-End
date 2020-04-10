@@ -12,19 +12,19 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 import { axiosAuth } from "../../../axiosWithAuth";
 import BackdropWait from "../../FeedbackComponents/BackdropWait";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   addButton: {
     marginBottom: 25,
-    width: "80%"
+    width: "80%",
   },
   root: {
     flexGrow: 1,
     padding: 25,
     margin: "0 auto",
     [theme.breakpoints.down("xs")]: {
-      padding: 10
+      padding: 10,
     },
-    maxWidth: 1200
+    maxWidth: 1200,
   },
   cardContainer: {
     background: "#FFFFFF",
@@ -34,68 +34,68 @@ const useStyles = makeStyles(theme => ({
     padding: 20,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   songName: {
     margin: 0,
     padding: 0,
     fontSize: "38px",
-    textAlign: "center"
+    textAlign: "center",
   },
   contentContainer: {},
   bpmContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   referenceContainer: {
     width: "80%",
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   chip: {
     marginRight: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   subTitle: {
     textAlign: "center",
-    fontSize: "20px"
+    fontSize: "20px",
   },
   bpm: {
-    textAlign: "center"
+    textAlign: "center",
   },
   attachmentsContainer: {
-    display: "flex"
+    display: "flex",
   },
   noResultsText: {
     color: "#333",
     opacity: 0.7,
     margin: 0,
     fontSize: "18px",
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
   },
   editButton: {
     position: "absolute",
     top: 20,
-    right: 20
+    right: 20,
   },
   confirmButton: {
     position: "absolute",
     top: 20,
-    right: 20
+    right: 20,
   },
   bpmField: {
-    marginTop: 10
+    marginTop: 10,
   },
   centeredFlex: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   addButton: {
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 }));
 
 const SongViewPage = () => {
@@ -103,60 +103,74 @@ const SongViewPage = () => {
   const [edit, setEdit] = useState(false);
   const [urlDialog, setUrlDialog] = useState(false);
   const [attachmentDialog, setAttachmentDialog] = useState(false);
+  const [attachmentFiles, setAttachmentFiles] = useState([]);
   const [songEditValues, setSongEditValues] = useState({
     title: "",
     bpm: 0,
     url: "",
-    attachment: ""
+    attachment: "",
   });
   const [apiWait, setApiWait] = useState(false);
   const [song, setSong] = useState({
     title: "",
     bpm: 0,
     referenceUrls: [],
-    attachmentUrls: []
+    attachmentUrls: [],
   });
 
   useEffect(() => {
     setApiWait(true);
     axiosAuth()
       .get(`/songs/${songId}`)
-      .then(res => {
+      .then((res) => {
         console.log("Song view res", res);
         setSong(res.data);
         setSongEditValues({
           ...songEditValues,
           title: res.data.title,
-          bpm: res.data.bpm
+          bpm: res.data.bpm,
         });
         setApiWait(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Err:", err.response);
         setApiWait(false);
       });
   }, []);
 
-  const handleEditChanges = e => {
+  useEffect(() => {
+    // Get attachment list
+    axiosAuth()
+      .get(`/songs/${songId}/attachment-list`)
+      .then((res) => {
+        console.log("res: ", res);
+        setAttachmentFiles(res.data.attachments);
+      })
+      .catch((err) => {
+        console.error("Error getting attachment list: ", err);
+      });
+  }, []);
+
+  const handleEditChanges = (e) => {
     setSongEditValues({ ...songEditValues, [e.target.name]: e.target.value });
   };
 
   const handleConfirmChanges = () => {
     axiosAuth()
       .put(`/songs/${songId}`, songEditValues)
-      .then(res => {
+      .then((res) => {
         console.log("Edited song response: ", res);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error: ", err.response);
       });
     setSong({ ...song, title: songEditValues.title, bpm: songEditValues.bpm });
     setEdit(false);
   };
 
-  const handleChipDelete = url => {
+  const handleChipDelete = (url) => {
     axiosAuth().delete(`/songs/${songId}/removeurl`, { data: { url } });
-    const filteredArr = song.referenceUrls.filter(refUrl => refUrl != url);
+    const filteredArr = song.referenceUrls.filter((refUrl) => refUrl != url);
     setSong({ ...song, referenceUrls: filteredArr });
   };
 
@@ -205,7 +219,6 @@ const SongViewPage = () => {
         )}
 
         <div className={classes.bpmContainer}>
-          {/* Metronome Icon */}
           {edit ? (
             <TextField
               type="number"
@@ -263,10 +276,12 @@ const SongViewPage = () => {
           )}
         </div>
         <div className={classes.attachmentsContainer}>
-          {song.attachmentUrls.length === 0 && (
+          {attachmentFiles.length === 0 ? (
             <p className={classes.noResultsText}>
               There are no attachments yet
             </p>
+          ) : (
+            attachmentFiles.map((file, index) => <p key={index}>{file}</p>)
           )}
         </div>
       </div>
