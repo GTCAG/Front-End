@@ -1,5 +1,8 @@
 TODO:
 
+Front:
+Don't mention us as a slavic/ukranian church.
+
 Library:
 -Detailed group dashboard view
 -Admin view of group dashboard
@@ -12,6 +15,8 @@ Library:
 -Event view
 -Song list
 -Song view (files/attachments/key/bpm)
+
+-Fix Delete Chip bug that redirects on delete
 
 Donation page:
 -Paypal (Research needed)/

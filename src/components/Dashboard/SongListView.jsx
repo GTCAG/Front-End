@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { axiosAuth } from "../../axiosWithAuth";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -42,11 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function generateList(songList, dense) {
+function generateList(songList, dense, handleClick) {
   return (
     <List dense={dense}>
       {songList.map((song, index) => (
-        <ListItem key={index} button onClick={() => console.log("Test")}>
+        <ListItem key={index} button onClick={() => handleClick(song._id)}>
           <ListItemAvatar>
             <ListItemIcon>
               <MusicNoteIcon />
@@ -66,6 +67,7 @@ const SongListView = () => {
   const [filteredSongList, setFilteredSongList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
   const dense = false;
 
   useEffect(() => {
@@ -99,6 +101,9 @@ const SongListView = () => {
     }
   }, [searchTerm]);
 
+  const handleSongClick = (songId) => {
+    history.push(`/dashboard/songs/${songId}`);
+  };
   return (
     <Paper className={classes.container}>
       <Typography variant="h6" className={classes.title}>
@@ -121,7 +126,7 @@ const SongListView = () => {
         </div>
       ) : (
         <div className={classes.demo}>
-          {generateList(filteredSongList, dense)}
+          {generateList(filteredSongList, dense, handleSongClick)}
         </div>
       )}
     </Paper>
