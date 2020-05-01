@@ -9,8 +9,15 @@ const useStyles = makeStyles(() => ({
   icon: {
     fontSize: "40px",
     marginRight: "20px",
-    color: "#444"
-  }
+    color: "#444",
+  },
+
+  disabledIcon: {
+    fontSize: "40px",
+    marginRight: "20px",
+    color: "#888",
+    opacity: 0.7,
+  },
 }));
 const MediaCard = () => {
   const classes = useStyles();
@@ -24,15 +31,16 @@ const MediaCard = () => {
           <p>Youtube</p>
         </a>
       </div>
-      <div className="media">
-        <a href="https://www.facebook.com/GraceTrinityChurch/?ref=nf&hc_ref=ART03pEjMPC3cd-tbTp_iAhT6IPlHWrCdI2wgyh_HWggVSb27aafVQL5ELahZNU9vZY">
-          <FacebookIcon className={classes.icon} />
+      <div className="media disabled">
+        <a href="" onClick={(e) => e.preventDefault()}>
+          <FacebookIcon className={classes.disabledIcon} />
           <p>Facebook</p>
         </a>
       </div>
-      <div className="media">
-        <a href="">
-          <InstagramIcon className={classes.icon} />
+      <div className="media disabled">
+        {/* Cancel out link clicks of disabled elements */}
+        <a href="" onClick={(e) => e.preventDefault()}>
+          <InstagramIcon className={classes.disabledIcon} />
           <p>Instagram</p>
         </a>
       </div>

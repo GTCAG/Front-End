@@ -5,8 +5,7 @@
   width: 100%;
 }
 
-
-.text-block  .signature {
+.text-block .signature {
   font-style: italic;
   padding: 0;
   color: #333;
@@ -49,7 +48,7 @@
         font-size: 19px;
       }
       p {
-        font-size: 15px;
+        font-size: 17px;
         @media screen and (max-width: $break-blocks) {
           padding: 0;
           margin: 5px 15px;

@@ -7,8 +7,14 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles(() => ({
   icon: {
     fontSize: "40px",
-    marginRight: "20px"
-  }
+    marginRight: "20px",
+  },
+  disabledIcon: {
+    fontSize: "40px",
+    marginRight: "20px",
+    color: "#888",
+    opacity: 0.7,
+  },
 }));
 
 const DonationDisplay = () => {
@@ -17,15 +23,12 @@ const DonationDisplay = () => {
     <div className="info-card shadow">
       <h2>Donate</h2>
 
-
       <Link to="/donate" className="donation">
         <PaymentRoundedIcon className={classes.icon} />
         <p>Card/Cash</p>
       </Link>
 
-
-
-      <div className="donation">
+      <div className="donation disabled">
         <i className="fab fa-paypal fa-2x paypal"></i>
         <p>Paypal</p>
       </div>
