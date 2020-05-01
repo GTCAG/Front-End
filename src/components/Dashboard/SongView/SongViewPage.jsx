@@ -9,6 +9,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import AddUrlDialog from "./AddUrlDialog";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 
+import Attachment from "./Attachment";
 import { axiosAuth } from "../../../axiosWithAuth";
 import BackdropWait from "../../FeedbackComponents/BackdropWait";
 
@@ -66,7 +67,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   attachmentsContainer: {
-    display: "flex",
+    display: "grid",
+    width: "100%",
+    gridTemplateColumns: "repeat(auto-fill, minmax(128px, 1fr))",
   },
   noResultsText: {
     color: "#333",
@@ -92,6 +95,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "column",
+    width: "100%",
   },
   addButton: {
     marginLeft: 10,
@@ -274,15 +279,18 @@ const SongViewPage = () => {
               </IconButton>
             </Tooltip>
           )}
-        </div>
-        <div className={classes.attachmentsContainer}>
-          {attachmentFiles.length === 0 ? (
-            <p className={classes.noResultsText}>
-              There are no attachments yet
-            </p>
-          ) : (
-            attachmentFiles.map((file, index) => <p key={index}>{file}</p>)
-          )}
+
+          <div className={classes.attachmentsContainer}>
+            {attachmentFiles.length === 0 ? (
+              <p className={classes.noResultsText}>
+                There are no attachments yet
+              </p>
+            ) : (
+              attachmentFiles.map((file, index) => (
+                <Attachment key={index} fileName={file} />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>
