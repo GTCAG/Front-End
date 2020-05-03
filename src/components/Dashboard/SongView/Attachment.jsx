@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     textDecoration: "none",
     borderRadius: 20,
+    width: 130,
 
     transition: "0.08s ease-in background-color",
     "&:hover": {
@@ -60,7 +61,6 @@ const Attachment = ({ fileName, songId }) => {
   const [link, setLink] = useState("");
 
   useEffect(() => {
-    console.log("Sending request...");
     axiosAuth()
       .get(`/songs/${songId}/attachment-signature`, { params: { fileName } })
       .then((res) => {

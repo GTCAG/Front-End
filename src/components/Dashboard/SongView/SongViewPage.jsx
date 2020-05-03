@@ -9,6 +9,8 @@ import CheckIcon from "@material-ui/icons/Check";
 import AddUrlDialog from "./AddUrlDialog";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 
+import AddAttachmentDialog from "./AddAttachmentDialog";
+
 import Attachment from "./Attachment";
 import { axiosAuth } from "../../../axiosWithAuth";
 import BackdropWait from "../../FeedbackComponents/BackdropWait";
@@ -68,6 +70,8 @@ const useStyles = makeStyles((theme) => ({
   },
   attachmentsContainer: {
     display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "space-between",
   },
   noResultsText: {
     color: "#333",
@@ -146,7 +150,6 @@ const SongViewPage = () => {
     axiosAuth()
       .get(`/songs/${songId}/attachment-list`)
       .then((res) => {
-        console.log("res: ", res);
         setAttachmentFiles(res.data.attachments);
       })
       .catch((err) => {
@@ -185,6 +188,12 @@ const SongViewPage = () => {
         songId={songId}
         open={urlDialog}
         onClose={() => setUrlDialog(false)}
+      />
+
+      <AddAttachmentDialog
+        songId={songId}
+        open={attachmentDialog}
+        onClose={() => setAttachmentDialog(false)}
       />
       <div className={classes.cardContainer}>
         {edit ? (
@@ -278,7 +287,10 @@ const SongViewPage = () => {
 
           {edit && (
             <Tooltip title="Add">
-              <IconButton className={classes.addButton}>
+              <IconButton
+                onClick={() => setAttachmentDialog(true)}
+                className={classes.addButton}
+              >
                 <AddIcon />
               </IconButton>
             </Tooltip>
