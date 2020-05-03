@@ -67,9 +67,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   attachmentsContainer: {
-    display: "grid",
-    width: "100%",
-    gridTemplateColumns: "repeat(auto-fill, minmax(128px, 1fr))",
+    display: "flex",
   },
   noResultsText: {
     color: "#333",
@@ -259,8 +257,14 @@ const SongViewPage = () => {
               clickable
               className={classes.chip}
               label={shortenUrl(url)}
-              component="a"
-              href={url}
+              component="div"
+              onClick={
+                edit
+                  ? (e) => e.preventDefault()
+                  : () => {
+                      window.location = url;
+                    }
+              }
               icon={<AttachFileIcon />}
               color="primary"
               key={index}
@@ -287,7 +291,7 @@ const SongViewPage = () => {
               </p>
             ) : (
               attachmentFiles.map((file, index) => (
-                <Attachment key={index} fileName={file} />
+                <Attachment key={index} fileName={file} songId={songId} />
               ))
             )}
           </div>
