@@ -18,7 +18,6 @@ import BackdropWait from "../../FeedbackComponents/BackdropWait";
 const useStyles = makeStyles((theme) => ({
   addButton: {
     marginBottom: 25,
-    width: "80%",
   },
   root: {
     flexGrow: 1,
