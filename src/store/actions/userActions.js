@@ -20,51 +20,50 @@ firstName: "WEBREG"
  * 
  */
 
-export const login = credentials => dispatch => {
+export const login = (credentials) => (dispatch) => {
   dispatch({ type: LOGIN_START });
 
   axiosAuth()
     .post("/users/login", credentials)
-    .then(res => {
+    .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.accessToken });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: LOGIN_FAILURE, payload: err.response.data.error });
     });
 };
 
-export const persistLogin = () => dispatch => {
+export const persistLogin = () => (dispatch) => {
   const token = localStorage.getItem("authToken");
   if (token)
     axiosAuth()
       .get("/users/whoami")
-      .then(res => {
-        console.log("res, ", res);
+      .then((res) => {
         const { userId, email, firstName, lastName } = res.data;
         dispatch({
           type: PERSIST_LOGIN,
-          payload: { userId, email, firstName, lastName }
+          payload: { userId, email, firstName, lastName },
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error doing persist,", err.response);
       });
 };
 
-export const logout = () => dispatch => {
+export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
   localStorage.removeItem("authToken");
 };
 
-export const register = (user, handleSuccess) => dispatch => {
+export const register = (user, handleSuccess) => (dispatch) => {
   dispatch({ type: REGISTER_START });
   axiosAuth()
     .post("/users/register", user)
-    .then(res => {
+    .then((res) => {
       dispatch({ type: REGISTER_SUCCESS });
       handleSuccess();
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("Error registering: ");
       console.log(err.response);
       dispatch({ type: REGISTER_FAILURE, payload: err.response.data.error });

@@ -3,7 +3,7 @@ import { axiosAuth } from "../axiosWithAuth";
 import styled from "styled-components";
 
 import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   videoContainer: {
     flexGrow: 1,
     height: 600,
@@ -12,9 +12,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: 15,
     marginBottom: 25,
     [theme.breakpoints.down("xs")]: {
-      height: 450
-    }
-  }
+      height: 450,
+    },
+  },
 }));
 
 const Container = styled.div``;
@@ -26,11 +26,10 @@ const LiveStreamDisplay = () => {
   useEffect(() => {
     axiosAuth()
       .get("/livestream")
-      .then(res => {
-        console.log("Livestream res, ", res);
+      .then((res) => {
         setLive(res.data.live);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Livestream err", err.response);
       });
   }, []);
@@ -44,6 +43,7 @@ const LiveStreamDisplay = () => {
             <iframe
               className={classes.videoContainer}
               width="560"
+              title="Livestream video"
               height="650"
               src="https://www.youtube.com/embed/live_stream?channel=UCNaKPci4jHkzFyo2hYwlVRQ"
               frameborder="0"

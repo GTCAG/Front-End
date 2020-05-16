@@ -23,35 +23,35 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles(() => ({
   root: {
     boxSizing: "border-box",
-    width: "80%"
+    width: "80%",
   },
   songTitle: {
-    color: "#555"
+    color: "#555",
   },
   list: {
-    minHeight: 100
+    minHeight: 100,
   },
   card: {
     marginBottom: 20,
     width: "100%",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
   },
   barRoot: {
     padding: 5,
-    backgroundColor: "#37474f"
+    backgroundColor: "#37474f",
   },
   title: {
-    textAlign: "center"
+    textAlign: "center",
   },
   nextIcon: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   toolbar: {
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   clearIcon: {
-    marginRight: 13
-  }
+    marginRight: 13,
+  },
 }));
 
 const EventSongList = ({ songs, admin, onSuccess, eventId, setSongs }) => {
@@ -63,13 +63,13 @@ const EventSongList = ({ songs, admin, onSuccess, eventId, setSongs }) => {
     setAddDialogOpen(true);
   };
 
-  const handleRemoveSong = songId => {
-    const filteredSongs = songs.filter(song => song._id != songId);
+  const handleRemoveSong = (songId) => {
+    const filteredSongs = songs.filter((song) => song._id !== songId);
     setSongs(filteredSongs);
     const body = { songId };
     axiosAuth()
       .delete(`/events/${eventId}/song`, { data: body })
-      .catch(err => {
+      .catch((err) => {
         console.log("There was an error removing a song", err.response);
       });
   };

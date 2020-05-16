@@ -11,7 +11,7 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
@@ -19,26 +19,26 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import { useEffect } from "react";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "500px",
     [theme.breakpoints.down("xs")]: {
-      width: "260px"
-    }
+      width: "260px",
+    },
   },
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: "auto"
-    }
+      width: "auto",
+    },
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -47,10 +47,10 @@ const useStyles = makeStyles(theme => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit"
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -59,26 +59,26 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: 120,
       "&:focus": {
-        width: 200
-      }
-    }
+        width: 200,
+      },
+    },
   },
   searchContainer: {
     border: "1px solid rgb(0,0,0,0.5)",
     borderRadius: "5px",
-    margin: "15px 15px"
+    margin: "15px 15px",
   },
   card: {
-    width: "100%"
+    width: "100%",
   },
   spinnerContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   list: {
-    overflow: "auto"
-  }
+    overflow: "auto",
+  },
 }));
 
 const AddExistingSongForm = ({ setSongs, songs }) => {
@@ -87,7 +87,7 @@ const AddExistingSongForm = ({ setSongs, songs }) => {
   const [apiWait, setApiWait] = useState(false);
   const [snack, setSnack] = useState({
     open: false,
-    message: ""
+    message: "",
   });
   const [searchValue, setSearchValue] = useState("");
   const [filteredList, setFilteredList] = useState([]);
@@ -97,45 +97,45 @@ const AddExistingSongForm = ({ setSongs, songs }) => {
     setApiWait(true);
     axiosAuth()
       .get("/songs")
-      .then(res => {
+      .then((res) => {
         setSongList(res.data);
         setFilteredList(res.data);
         setApiWait(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error: ", err);
         setApiWait(false);
       });
   }, []);
 
   useEffect(() => {
-    const filtered = songList.filter(song =>
+    const filtered = songList.filter((song) =>
       song.title.toLowerCase().includes(searchValue.toLowerCase())
     );
     setFilteredList(filtered);
-  }, [searchValue]);
+  }, [searchValue, songList]);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleAdd = song => {
-    const filteredList = songList.filter(s => s._id !== song._id);
+  const handleAdd = (song) => {
+    const filteredList = songList.filter((s) => s._id !== song._id);
     setSongList(filteredList);
     axiosAuth()
       .post(`/events/${eventId}/song`, { songId: song._id })
-      .then(res => {
+      .then((res) => {
         setSongs([...songs, song]);
         setSnack({
           open: true,
-          message: `Added '${song.title}' to the event!`
+          message: `Added '${song.title}' to the event!`,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error: ", console.log(err));
         setSnack({
           open: true,
-          message: `There was an error adding song '${song.title}'`
+          message: `There was an error adding song '${song.title}'`,
         });
       });
   };
@@ -163,7 +163,7 @@ const AddExistingSongForm = ({ setSongs, songs }) => {
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
-                input: classes.inputInput
+                input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
               onChange={handleChange}

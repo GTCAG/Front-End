@@ -100,9 +100,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "100%",
   },
-  addButton: {
-    marginLeft: 10,
-  },
 }));
 
 const SongViewPage = () => {
@@ -130,7 +127,6 @@ const SongViewPage = () => {
     axiosAuth()
       .get(`/songs/${songId}`)
       .then((res) => {
-        console.log("Song view res", res);
         setSong(res.data);
         setSongEditValues({
           ...songEditValues,
@@ -155,7 +151,7 @@ const SongViewPage = () => {
       .catch((err) => {
         console.error("Error getting attachment list: ", err);
       });
-  }, []);
+  }, [songId]);
 
   const handleEditChanges = (e) => {
     setSongEditValues({ ...songEditValues, [e.target.name]: e.target.value });
@@ -176,7 +172,7 @@ const SongViewPage = () => {
 
   const handleChipDelete = (url) => {
     axiosAuth().delete(`/songs/${songId}/removeurl`, { data: { url } });
-    const filteredArr = song.referenceUrls.filter((refUrl) => refUrl != url);
+    const filteredArr = song.referenceUrls.filter((refUrl) => refUrl !== url);
     setSong({ ...song, referenceUrls: filteredArr });
   };
 

@@ -72,7 +72,7 @@ const Attachment = ({ fileName, songId }) => {
         );
         console.log(err.response.data);
       });
-  }, []);
+  }, [fileName, songId]);
 
   const classes = useStyles();
   return (

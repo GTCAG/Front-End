@@ -99,7 +99,7 @@ const SongListView = () => {
       );
       setFilteredSongList(filtered);
     }
-  }, [searchTerm]);
+  }, [searchTerm, songList]);
 
   const handleSongClick = (songId) => {
     history.push(`/dashboard/songs/${songId}`);

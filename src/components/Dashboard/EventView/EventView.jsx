@@ -10,51 +10,51 @@ import { axiosAuth } from "../../../axiosWithAuth";
 import EventSongList from "./EventSongList";
 import BackdropWait from "../../FeedbackComponents/BackdropWait";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: 25,
     margin: "0 auto",
     [theme.breakpoints.down("xs")]: {
-      padding: 10
+      padding: 10,
     },
-    maxWidth: 1200
+    maxWidth: 1200,
   },
   titleContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   eventName: {
     margin: 0,
     padding: 0,
-    fontSize: "35px"
+    fontSize: "35px",
   },
   eventDate: {
-    color: "#898989"
+    color: "#898989",
   },
   cardContainer: {
     background: "#FFFFFF",
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 15,
-    padding: 20
+    padding: 20,
   },
   headerTitle: {
     margin: 0,
     padding: 0,
-    marginTop: 25
+    marginTop: 25,
   },
   songsContainer: {
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    marginTop: 40
+    marginTop: 40,
   },
   addButton: {
     marginBottom: 25,
-    width: "80%"
-  }
+    width: "80%",
+  },
 }));
 
 const EventView = () => {
@@ -64,13 +64,13 @@ const EventView = () => {
     date: Date.now(),
     name: "",
     songs: [],
-    roles: []
+    roles: [],
   });
   const [associatedGroup, setAssociatedGroup] = useState({
-    admins: []
+    admins: [],
   });
   const [admin, setAdmin] = useState(false);
-  const userId = useSelector(state => state.userId);
+  const userId = useSelector((state) => state.userId);
   const classes = useStyles();
   const { eventId } = useParams();
 
@@ -79,12 +79,12 @@ const EventView = () => {
     // set the event from backend info.
     axiosAuth()
       .get(`/events/${eventId}`)
-      .then(res => {
+      .then((res) => {
         console.log("Event view res:", res);
         setEvent(res.data);
         setApiWait(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Err: ", err);
       });
   }, [eventId]);
@@ -93,35 +93,37 @@ const EventView = () => {
     if (event.associatedGroup)
       axiosAuth()
         .get(`/groups/${event.associatedGroup}`)
-        .then(ares => {
+        .then((ares) => {
           setAssociatedGroup(ares.data);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("Err: ", err);
         });
   }, [event]);
 
   useEffect(() => {
     if (associatedGroup && associatedGroup.admins && userId) {
-      const isAdmin = associatedGroup.admins.some(admin => admin._id == userId);
+      const isAdmin = associatedGroup.admins.some(
+        (admin) => admin._id === userId
+      );
       setAdmin(isAdmin);
     }
   }, [userId, associatedGroup]);
 
-  const setSongs = songs => {
+  const setSongs = (songs) => {
     setEvent({ ...event, songs });
   };
 
   const handleSuccess = (songId, setLoading, setDialogOpen) => {
     axiosAuth()
       .post(`/events/${eventId}/song`, { songId })
-      .then(res => {
+      .then((res) => {
         setDialogOpen(false);
         setLoading(false);
         setSnack({ open: true, message: "Added Song(s)" });
         setEvent({ ...event, songs: res.data.songs });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error: ", console.log(err));
         setSnack({ open: true, message: "There was an error adding the song" });
       });

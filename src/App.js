@@ -9,20 +9,17 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import ContactPage from "./components/Contact/ContactPage";
 import LoginPage from "./components/Login/LoginPage";
 import Register from "./components/Register/Register";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { persistLogin } from "./store/actions/userActions";
 import DonationsPage from "./components/Donations/DonationsPage";
 
 function App() {
-  const state = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(persistLogin());
-  }, []);
-
-  console.log("Current state: ", state);
+  }, [dispatch]);
 
   return (
     <Router>
