@@ -6,12 +6,13 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import { makeStyles, TextField, CircularProgress } from "@material-ui/core";
+import { makeStyles, withStyles, TextField } from "@material-ui/core";
 import DialogActions from "@material-ui/core/DialogActions";
+
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 import { axiosAuth } from "../../../axiosWithAuth";
 import axios from "axios";
-
 const useStyles = makeStyles(() => ({
   contentContainer: {
     padding: 20,
@@ -26,11 +27,18 @@ const useStyles = makeStyles(() => ({
     width: "100%",
   },
   progressContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    width: "100%",
+    "& > * + *": {
+      marginTop: 20,
+    },
   },
 }));
+
+const CompleteLinearProgress = withStyles({
+  barColorPrimary: {
+    backgroundColor: "#22dd22",
+  },
+})(LinearProgress);
 
 function getSignedURL(songId, file) {
   return new Promise((resolve, reject) => {
@@ -41,12 +49,10 @@ function getSignedURL(songId, file) {
         fileType: file.type,
       })
       .then((res) => {
-        console.log("Ok");
         const { signedURL } = res.data;
         resolve(signedURL);
       })
       .catch((err) => {
-        console.log("Not ok");
         reject(err);
       });
   });
@@ -57,10 +63,13 @@ function toSecureURL(url) {
 }
 
 const AddAttachmentDialog = ({ open, onClose, songId }) => {
-  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [loadPercent, setLoadPercent] = useState(0);
+  const [complete, setComplete] = useState(false);
   const [file, setFile] = useState("");
 
   const handleAdd = () => {
+    setUploading(true);
     getSignedURL(songId, file)
       .then((signedUrl) => {
         const secureURL = toSecureURL(signedUrl);
@@ -69,18 +78,17 @@ const AddAttachmentDialog = ({ open, onClose, songId }) => {
             const percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
-            console.log("Percent completed: ", percentCompleted);
+            setLoadPercent(percentCompleted);
           },
         };
 
         return axios.put(secureURL, file, config);
       })
       .then((res) => {
-        console.log("Upload completed", res);
+        setComplete(true);
+        setTimeout(onClose, 2000);
       })
-      .catch((err) => {
-        console.log("Upload interrupted: ", err.response);
-      });
+      .catch((err) => {});
   };
 
   const classes = useStyles();
@@ -94,17 +102,29 @@ const AddAttachmentDialog = ({ open, onClose, songId }) => {
         Add Attachment
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>Upload a file for this song</DialogContentText>
-        {loading ? (
+        <DialogContentText>
+          {complete
+            ? "Upload Complete!"
+            : uploading
+            ? "Uploading file..."
+            : "Upload a file for this song"}
+        </DialogContentText>
+        {uploading ? (
           <div className={classes.progressContainer}>
-            <CircularProgress />
+            {complete ? (
+              <CompleteLinearProgress
+                variant="determinate"
+                value={loadPercent}
+              />
+            ) : (
+              <LinearProgress variant="determinate" value={loadPercent} />
+            )}
           </div>
         ) : (
           <TextField
             type="file"
             className={classes.field}
             variant="outlined"
-            // value={file}
             placeholder="File"
             onChange={(e) => setFile(e.target.files[0])}
           />
@@ -117,14 +137,14 @@ const AddAttachmentDialog = ({ open, onClose, songId }) => {
           onClick={handleAdd}
           className={classes.button}
           fullWidth
-          disabled={loading}
+          disabled={uploading}
         >
           Upload
         </Button>
         <Button
           color="secondary"
           onClick={onClose}
-          disabled={loading}
+          disabled={uploading}
           className={classes.button}
           fullWidth
         >
