@@ -52,6 +52,10 @@ function getSignedURL(songId, file) {
   });
 }
 
+function toSecureURL(url) {
+  return url.replace("http", "https");
+}
+
 const AddAttachmentDialog = ({ open, onClose, songId }) => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState("");
@@ -59,6 +63,7 @@ const AddAttachmentDialog = ({ open, onClose, songId }) => {
   const handleAdd = () => {
     getSignedURL(songId, file)
       .then((signedUrl) => {
+        const secureURL = toSecureURL(signedUrl);
         const config = {
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
@@ -68,7 +73,7 @@ const AddAttachmentDialog = ({ open, onClose, songId }) => {
           },
         };
 
-        return axios.put(signedUrl, file, config);
+        return axios.put(secureURL, file, config);
       })
       .then((res) => {
         console.log("Upload completed", res);
