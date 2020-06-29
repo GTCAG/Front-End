@@ -19,10 +19,13 @@ const Tag = styled.span`
   font-family: Open Sans, sans-serif;
   letter-spacing: 1px;
   font-size: 24px;
+  color: #2c2e2f;
+  opacity: 0.83;
 `;
 
 const OtherTagIcon = styled.img`
   width: 40px;
+  opacity: 0.7;
 `;
 
 const OtherContainer = styled.div`
