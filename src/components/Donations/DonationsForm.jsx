@@ -2,257 +2,97 @@ import React, { useState } from "react";
 import ImageForm from "../ImageForm/ImageForm";
 import bgImg from "../../images/donate1.jpg";
 import styled from "styled-components";
-import { CardElement, injectStripe } from "react-stripe-elements";
 
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { axiosAuth } from "../../axiosWithAuth";
+import paypalIcon from "../../images/icons/paypal_icon.svg";
+import paypalTitle from "../../images/icons/paypal_title.svg";
+
+import venmoIcon from "../../images/icons/venmo.png";
+import cashappIcon from "../../images/icons/cash-app.png";
 
 const FormContainer = styled.div`
   height: 650px;
   width: 100%;
 `;
 
-const createOptions = () => {
-  return {
-    style: {
-      base: {
-        fontSize: "16px",
-        color: "#424770",
-        fontFamily: "Open Sans, sans-serif",
-        letterSpacing: "0.025em",
-        "::placeholder": {
-          color: "#aab7c4"
-        }
-      },
-      invalid: {
-        color: "#c23d4b"
-      }
-    }
-  };
-};
-
-const CardInput = styled.div`
-  .StripeElement {
-    padding: 20px 14px;
-    box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-      rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-    border: 0;
-    outline: 0;
-    border-radius: 4px;
-    background: white;
-    margin: 10px 0 20px 0;
-    // font-family: "Source Code Pro", monospace;
-    font-family: Open Sans, sans-serif;
-
-    max-width: 500px;
-  }
-  &:focus,
-  .StripeElement--focus {
-    box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
-      rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
-    -webkit-transition: all 150ms ease;
-    transition: all 150ms ease;
-  }
-`;
-
-const InputLabel = styled.label`
+const Tag = styled.span`
+  font-weight: bold;
   font-family: Open Sans, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-
-  color: #6b7c93;
-  // font-weight: 300;
-  letter-spacing: 0.025em;
-  cursor: default;
+  letter-spacing: 1px;
 `;
 
-const InputField = styled.input`
-  padding: 20px 14px;
-  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-  border: 0;
-  outline: 0;
-  color: #424770;
-  border-radius: 4px;
-  background: white;
-  margin: 10px 0 20px 0;
-  font-family: Open Sans, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  max-width: 500px;
-
-  &::placeholder {
-    color: #aab7c4;
-  }
-
-  &:focus {
-    box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
-      rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
-    -webkit-transition: all 150ms ease;
-    transition: all 150ms ease;
-  }
+const OtherTagIcon = styled.img`
+  width: 40px;
 `;
 
-const AmountInput = styled.input`
-  padding: 20px 14px 0px 14px;
-  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-  border: 0;
-  box-sizing: border-box;
-  outline: 0;
-  border-radius: 4px;
-  background: #333;
-  margin: 10px 0 20px 0;
-  font-size: 70px;
-  width: 100%;
-  max-width: 500px;
-  color: white;
-
-  &:focus,
-  .StripeElement--focus {
-    box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
-      rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
-    -webkit-transition: all 150ms ease;
-    transition: all 150ms ease;
-  }
-`;
-
-const AmountContainer = styled.div`
+const OtherContainer = styled.div`
   display: flex;
   align-items: center;
-  box-sizing: border-box;
 
-  padding: 20px 14px;
-  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-  border: 0;
-  box-sizing: border-box;
-  outline: 0;
-  border-radius: 4px;
-  background: #333;
-  margin: 10px 0 20px 0;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 70px;
-  width: 100%;
-  max-width: 500px;
-  color: white;
-
-  &:focus,
-  .StripeElement--focus {
-    box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
-      rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
-    -webkit-transition: all 150ms ease;
-    transition: all 150ms ease;
-  }
+  margin-bottom: 10px;
 `;
 
-const DonationsForm = ({ stripe }) => {
-  const [amount, setAmount] = useState(0.0);
-  const [name, setName] = useState("");
-  const [processing, setProcessing] = useState(false);
-  const [snack, setSnack] = useState({ open: false, message: "" });
-  const handleAmountChange = e => {
-    setAmount(e.target.value);
-  };
+const PayPalButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: none;
 
-  const handleSnackClose = () => {
-    setSnack({ open: false, message: "" });
-  };
+  background: #2c2e2f;
+  color: #fff;
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    if (amount < 0.5) {
-      setSnack({
-        open: true,
-        message: "Donation amount must be a minimum of $0.50"
-      });
-      return;
-    }
+  font-size: 14.5px;
+  height: 50px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: 0.25s;
 
-    const { token } = await stripe.createToken({ name });
-    setProcessing(true);
+  margin-top: 25px;
 
-    console.log("Token: ", token);
+  &:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2);
+  }
+`;
+const PaypalIcon = styled.img`
+  margin-right: 5px;
+  height: 25px;
+`;
 
-    if (token)
-      axiosAuth()
-        .post("/charge", { id: token.id, amount: amount })
-        .then(res => {
-          console.log("Response: ", res);
-          setSnack({ open: true, message: "Donation received. Thank you!" });
-          setAmount(0.0);
-          setProcessing(false);
-        })
-        .catch(err => {
-          console.log(err.response);
-          setSnack({ open: true, message: "Error processing payment." });
-          setProcessing(false);
-        });
-    else {
-      setSnack({ open: true, message: "Card invalid" });
-      setProcessing(false);
-    }
+const PaypalTitle = styled.img`
+  height: 25px;
+`;
+
+const CashAppTag = styled(Tag)`
+  margin-left: 5px;
+`;
+
+const DonationsForm = () => {
+  const handlePaypalButton = () => {
+    window.location.href = "https://www.paypal.com/biz/fund?id=YJCTP942P8MRY";
   };
 
   return (
     <FormContainer>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left"
-        }}
-        open={snack.open}
-        autoHideDuration={6000}
-        onClose={handleSnackClose}
-        message={snack.message}
-        action={
-          <React.Fragment>
-            <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              onClick={handleSnackClose}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
-        }
-      />
-      <ImageForm loading={processing} img={bgImg} handleSubmit={handleSubmit}>
-        <h2>Donate by Card</h2>
-        <p>Enter an amount to give</p>
-        <AmountContainer>
-          $
-          <AmountInput
-            id="amount-input"
-            type="number"
-            onChange={handleAmountChange}
-            value={amount}
-            min="0"
-            step="0.01"
-          />
-        </AmountContainer>
-        <InputLabel htmlFor="name">Full Name</InputLabel>
-        <InputField
-          type="text"
-          placeholder="John Doe"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          id="name"
-          name="name"
-        />
-        <InputLabel>Card Details</InputLabel>
-        <CardInput>
-          <CardElement {...createOptions()} />
-        </CardInput>
-        <button type="submit" disabled={processing}>
-          Pay
-        </button>
+      <ImageForm img={bgImg}>
+        <h2>Choose how to donate</h2>
+        <p>Donate with Venmo, CashApp, or PayPal</p>
+        <OtherContainer>
+          <OtherTagIcon src={venmoIcon} />
+          <Tag>@GTCAG</Tag>
+        </OtherContainer>
+        <OtherContainer>
+          <OtherTagIcon src={cashappIcon} />
+          <CashAppTag>$GTCAG</CashAppTag>
+        </OtherContainer>
+        <PayPalButton onClick={handlePaypalButton}>
+          <PaypalIcon src={paypalIcon} />
+          <PaypalTitle src={paypalTitle} />
+        </PayPalButton>
       </ImageForm>
     </FormContainer>
   );
 };
 
-export default injectStripe(DonationsForm);
+export default DonationsForm;
