@@ -49,7 +49,7 @@ const NavBar = () => {
     }
   }, [open]);
 
-  const handleMenuClick = e => {
+  const handleMenuClick = (e) => {
     setOpen(!open);
   };
 
@@ -64,7 +64,7 @@ const NavBar = () => {
             <Link to="/about">Pastor</Link>
 
             <Link to="/contact">Contact</Link>
-            <Link to="/login">Library</Link>
+            {/* <Link to="/login">Library</Link> */}
           </div>
           <button
             onClick={handleMenuClick}

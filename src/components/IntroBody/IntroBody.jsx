@@ -4,9 +4,9 @@ import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded";
 import VideoLibraryRoundedIcon from "@material-ui/icons/VideoLibraryRounded";
 import "./IntroBody.scss";
 import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
-    fontSize: "70px"
+    fontSize: "70px",
   },
   videoContainer: {
     flexGrow: 1,
@@ -16,9 +16,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: 15,
     marginBottom: 25,
     [theme.breakpoints.down("xs")]: {
-      height: 450
-    }
-  }
+      height: 450,
+    },
+  },
 }));
 
 const IntroBody = () => {
@@ -64,15 +64,14 @@ const IntroBody = () => {
         <div className="text-content-wrapper max-size">
           <h2>Our Story</h2>
           <p>
-            It's no secret this Isn't a regular American church. The majority of
-            the members come from a slavic background that ranges mainly around
-            a Ukranian or Russian descent. The church originally did not own a
-            building and had to rent space from another church. After saving up
-            money and through hard work we bought our own building that is
-            current today. Before we acquired the building, it operated as a
-            strip club and was host to many regrets. The building was once a
-            place of sin and now it has been transformed into a place of peace,
-            praise, and worship to the Lord.
+            The majority of our members come from a slavic background that
+            ranges mainly around a Ukranian or Russian descent. The church
+            originally did not own a building and had to rent space from another
+            church. After saving up money and through hard work we bought our
+            own building that we are still using today. Before we acquired the
+            building, it operated as a a sinful adult establishment. The
+            building was once a place of sin and now it has been transformed
+            into a place of peace, praise, and worship to the Lord.
           </p>
         </div>
       </div>
@@ -83,13 +82,13 @@ const IntroBody = () => {
         <div className="text-content-wrapper max-size">
           <h2>Who We Are</h2>
           <p>
-            We are a local slavic church here to serve the community. We are
-            open Sundays in the morning and evening, Tuesday evenings, and
-            Thursday evenings. We provide sermons, worship sessions, and a choir
-            during our weekly normal services and have english translators
-            readily available. If you have kids, we offer Sunday School classes
-            for their own fun and education. Teens and young adults are welcomed
-            at Youth services every Tuesday evening for worship, prayer, and
+            We are a local church here to serve the community. We are open
+            Sundays in the morning and evening, Tuesday evenings, and Thursday
+            evenings. We provide sermons, worship sessions, and a choir during
+            our weekly normal services and have english translators readily
+            available. If you have kids, we offer Sunday School classes for
+            their own fun and education. Teens and young adults are welcomed at
+            Youth services every Tuesday evening for worship, prayer, and
             fellowship.
           </p>
         </div>
@@ -120,24 +119,7 @@ const IntroBody = () => {
       <div className="para-image img4" />
       <div className="text-block dark">
         <div className="text-content-wrapper max-size">
-          <h2>Who We Are</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nibh
-            dolor, congue quis aliquam at, scelerisque ac purus. Morbi a
-            pellentesque augue. Praesent sit amet mattis ante. Nunc quis enim
-            velit. Ut in arcu a massa egestas dignissim. Mauris maximus suscipit
-            massa. Morbi fermentum nibh non ex malesuada, feugiat rhoncus lorem
-            finibus. Nunc fringilla interdum purus, vitae posuere leo lobortis
-            nec. Duis justo diam, eleifend vel lorem eget, semper porttitor
-            augue. Integer mi nunc, mattis auctor ex et, imperdiet posuere ante.
-            Aliquam erat volutpat. Fusce sed libero id est sagittis pretium.
-            Etiam eros orci, tempor sagittis placerat ullamcorper, pretium eu
-            ligula. Interdum et malesuada fames ac ante ipsum primis in
-            faucibus. Ut vestibulum nulla sed condimentum maximus. Aenean
-            dignissim vel est eget tempor. Donec sodales libero nec lacus
-            mattis, ac tempus mi tincidunt. Sed luctus ut est vitae pharetra. Ut
-            at tempor ligula. Nullam pharetra quam ut nunc tempus bibendum.
-          </p>
+          <h2>Enjoy your stay</h2>
         </div>
       </div>
     </div>

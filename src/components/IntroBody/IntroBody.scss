@@ -48,7 +48,7 @@
         font-size: 19px;
       }
       p {
-        font-size: 17px;
+        font-size: 19px;
         @media screen and (max-width: $break-blocks) {
           padding: 0;
           margin: 5px 15px;
@@ -76,8 +76,9 @@
   }
   p {
     padding: 0 40px;
-    font-size: 17px;
+    font-size: 19px;
     line-height: 1.85;
+    letter-spacing: 1px;
     text-align: justify;
     @media screen and (max-width: $break-large) {
       margin: 0 10px;

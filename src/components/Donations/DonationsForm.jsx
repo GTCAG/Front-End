@@ -18,6 +18,7 @@ const Tag = styled.span`
   font-weight: bold;
   font-family: Open Sans, sans-serif;
   letter-spacing: 1px;
+  font-size: 24px;
 `;
 
 const OtherTagIcon = styled.img`
